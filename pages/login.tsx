@@ -31,12 +31,14 @@ const LoginPage: NextPage = () => {
         <TextInput
           id="filled-basic"
           label="Email"
+          type="email"
           variant="standard"
           sx={{ width: "100%" }}
         />
         <TextInput
           id="filled-basic"
           label="Password"
+          type="password"
           variant="standard"
           sx={{ width: "100%" }}
         />
