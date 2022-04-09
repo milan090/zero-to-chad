@@ -12,5 +12,6 @@
     "indent": ["error", 2],
     "quotes": [2, "double"],
     "prefer-const": "error"
-  }
+  },
+  "ignorePatterns": [".next", "pnpm-lock.yaml", "node_modules"]
 }
