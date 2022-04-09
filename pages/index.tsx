@@ -1,21 +1,37 @@
-import { Button } from "@mui/material"
+import { Box, Button, SvgIcon, Typography } from "@mui/material"
 import type { NextPage } from "next"
 import { NextSeo } from "next-seo"
-import toast from "react-hot-toast"
-import styles from "../styles/Home.module.css"
-
-const notify = () => toast("Here is your toast.")
+import { useState } from "react"
+import ProfileIcon from "../public/images/home/carbon_user-avatar.svg"
 
 const Home: NextPage = () => {
+  const [isAuth, setIsAuth] = useState(false)
+
   return (
-    <div className={styles.container}>
+    <div>
       <NextSeo title="Home" description="A short description goes here." />
 
-      <main className={styles.main}>
-        <h1>Hi</h1>
-        <Button onClick={notify} color="primary" variant="contained">
-          Toast
-        </Button>
+      <main>
+        <Box
+          marginX="2rem"
+          marginTop="2rem"
+          sx={{ display: "flex" }}
+          justifyContent="space-between"
+        >
+          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+            Zero To Chad
+          </Typography>
+          {isAuth ? (
+            <Button>My Account</Button>
+          ) : (
+            <Button
+              variant="contained"
+              startIcon={<ProfileIcon width="22px" />}
+            >
+              Login
+            </Button>
+          )}
+        </Box>
       </main>
     </div>
   )

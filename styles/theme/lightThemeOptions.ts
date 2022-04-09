@@ -31,6 +31,11 @@ export const lightThemeOptions = responsiveFontSizes(
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
       ].join(","),
+      button: {
+        borderRadius: "0.5rem",
+        textTransform: "none",
+        fontWeight: "600",
+      },
     },
   })
 )
