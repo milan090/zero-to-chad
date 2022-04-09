@@ -1,11 +1,11 @@
-import { Box, Button, SvgIcon, Typography } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
 import type { NextPage } from "next"
 import { NextSeo } from "next-seo"
 import { useState } from "react"
 import ProfileIcon from "../public/images/home/carbon_user-avatar.svg"
 
 const Home: NextPage = () => {
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth] = useState(false)
 
   return (
     <div>
