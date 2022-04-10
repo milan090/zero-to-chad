@@ -1,7 +1,7 @@
-import { Button, Grid, Typography } from "@mui/material"
-import { NextPage } from "next"
-import { PrimaryBox } from "src/client/components/Box.component"
-import { TextInput } from "src/client/components/TextInput.component"
+import { Button, Grid, Typography } from "@mui/material";
+import { NextPage } from "next";
+import { PrimaryBox } from "src/client/components/Box.component";
+import { TextInput } from "src/client/components/TextInput.component";
 
 const ChooseHabitsPage: NextPage = () => {
   return (
@@ -26,7 +26,7 @@ const ChooseHabitsPage: NextPage = () => {
         }}
       >
         <Typography variant="h4" fontWeight="600" textAlign="center">
-            Choose Your Habits
+          Choose Your Habits
         </Typography>
         <TextInput
           id="filled-basic"
@@ -68,7 +68,7 @@ const ChooseHabitsPage: NextPage = () => {
       </PrimaryBox>
       {/* </Grid> */}
     </Grid>
-  )
-}
+  );
+};
 
-export default ChooseHabitsPage
+export default ChooseHabitsPage;

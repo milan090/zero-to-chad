@@ -1,9 +1,9 @@
-import { Button, Grid, Typography } from "@mui/material"
-import { NextPage } from "next"
-import { PrimaryBox } from "src/client/components/Box.component"
-import Box from '@mui/material/Box';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
+import { Button, Grid, Typography } from "@mui/material";
+import { NextPage } from "next";
+import { PrimaryBox } from "src/client/components/Box.component";
+import Box from "@mui/material/Box";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 const ChooseTopicsPage: NextPage = () => {
   return (
@@ -28,9 +28,8 @@ const ChooseTopicsPage: NextPage = () => {
         }}
       >
         <Typography variant="h4" fontWeight="600" textAlign="center">
-            Select The Topics That 
-                Interest You
-        </Typography> 
+          Select The Topics That Interest You
+        </Typography>
         <Autocomplete //TODO: remove outline
           multiple
           limitTags={2}
@@ -40,10 +39,16 @@ const ChooseTopicsPage: NextPage = () => {
           renderInput={(params) => (
             <TextField {...params} label="Topics" placeholder="Science" />
           )}
-          sx={{ width: '500px', backgroundColor: 'white', borderRadius: 16 }}
+          sx={{ width: "500px", backgroundColor: "white", borderRadius: 16 }}
         />
         <Box
-        sx={{ display: 'flex', justifyContent: 'space-between',  width: 450, marginTop: 5 }}>
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: 450,
+            marginTop: 5,
+          }}
+        >
           <Button //TODO: position buttons correctly
             variant="contained"
             color="secondary"
@@ -66,12 +71,13 @@ const ChooseTopicsPage: NextPage = () => {
       </PrimaryBox>
       {/* </Grid> */}
     </Grid>
-  )
-}
+  );
+};
 
-const topics = [ //TODO: replace with db
-  { name: 'Technology' },
-  { name: 'Science' },
+const topics = [
+  //TODO: replace with db
+  { name: "Technology" },
+  { name: "Science" },
 ];
 
-export default ChooseTopicsPage
+export default ChooseTopicsPage;
