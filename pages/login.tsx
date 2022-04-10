@@ -3,10 +3,25 @@ import { NextPage } from "next";
 import { PrimaryBox } from "src/client/components/Box.component";
 import { TextInput } from "src/client/components/TextInput.component";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "config/firebase.config";
+import Router from "next/router";
+import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Link from "next/link";
 
 type Inputs = {
   email: string;
   password: string;
+};
+
+const login = async (email: string, password: string) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    const error = err as { code: string };
+    console.log(error.code);
+  }
 };
 
 const LoginPage: NextPage = () => {
@@ -15,7 +30,13 @@ const LoginPage: NextPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = ({ email, password }) =>
+    login(email, password);
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    if (user) Router.push("/dashboard");
+  }, [user]);
 
   return (
     <Grid
@@ -33,7 +54,7 @@ const LoginPage: NextPage = () => {
             display: "flex",
             justifyContent: "center",
             flexWrap: "wrap",
-            gap: "2rem",
+            gap: "1rem",
             paddingBottom: "8rem",
           }}
           onSubmit={handleSubmit(onSubmit)}
@@ -77,6 +98,12 @@ const LoginPage: NextPage = () => {
               Login
             </Typography>
           </Button>
+          <Typography>
+            Not Registered yet?
+            <Link href="/signup" passHref>
+              <a> Sign Up</a>
+            </Link>
+          </Typography>
         </form>
       </PrimaryBox>
       {/* </Grid> */}

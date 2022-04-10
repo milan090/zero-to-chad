@@ -26,6 +26,7 @@ specifiers:
   prettier: ^2.6.2
   react: 18.0.0
   react-dom: 18.0.0
+  react-firebase-hooks: ^5.0.3
   react-hook-form: ^7.29.0
   react-hot-toast: ^2.2.0
   typescript: 4.6.3
@@ -44,6 +45,7 @@ dependencies:
   next-seo: 5.4.0_c0abbb53577d424fe320649841fdc7d4
   react: 18.0.0
   react-dom: 18.0.0_react@18.0.0
+  react-firebase-hooks: 5.0.3_firebase@9.6.10+react@18.0.0
   react-hook-form: 7.29.0_react@18.0.0
   react-hot-toast: 2.2.0_aee3b59847029cfc9aee5217330a3daf
   zustand: 3.7.2_react@18.0.0
@@ -4402,6 +4404,16 @@ packages:
       loose-envify: 1.4.0
       react: 18.0.0
       scheduler: 0.21.0
+    dev: false
+
+  /react-firebase-hooks/5.0.3_firebase@9.6.10+react@18.0.0:
+    resolution: {integrity: sha512-0+V2XwInZJNjW8B2cm+U21Hlv4xnp/1tJqIoDg2rjyWzKTQ9VoLPQ9PAt+fMqPumjLz5uCIREY7YqGSSjc439Q==}
+    peerDependencies:
+      firebase: '>= 9.0.0'
+      react: '>= 16.8.0'
+    dependencies:
+      firebase: 9.6.10
+      react: 18.0.0
     dev: false
 
   /react-hook-form/7.29.0_react@18.0.0:

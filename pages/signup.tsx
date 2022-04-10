@@ -16,6 +16,9 @@ import {
 } from "firebase/firestore";
 import { useEffect } from "react";
 import { FirebaseError } from "firebase/app";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Router from "next/router";
+import Link from "next/link";
 
 type Inputs = {
   username: string;
@@ -72,6 +75,8 @@ const SignupPage: NextPage = () => {
   const password = useRef({});
   password.current = watch("password", "");
 
+  const [user] = useAuthState(auth);
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       await signUp(data);
@@ -87,8 +92,8 @@ const SignupPage: NextPage = () => {
   };
 
   useEffect(() => {
-    console.log("Errors:", errors);
-  }, [errors]);
+    if (user) Router.push("/dashboard");
+  }, [user]);
 
   return (
     <Grid
@@ -174,6 +179,12 @@ const SignupPage: NextPage = () => {
               Sign Up
             </Typography>
           </Button>
+          <Typography>
+            Have an existing account?
+            <Link href="/login" passHref>
+              <a> Login</a>
+            </Link>
+          </Typography>
         </form>
       </PrimaryBox>
       {/* </Grid> */}
