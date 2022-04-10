@@ -1,6 +1,7 @@
 import { Button, Grid, Typography } from "@mui/material"
 import { NextPage } from "next"
 import { PrimaryBox } from "src/client/components/Box.component"
+import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
@@ -23,7 +24,7 @@ const ChooseTopicsPage: NextPage = () => {
           justifyContent: "center",
           flexWrap: "wrap",
           gap: "2rem",
-          paddingBottom: "8rem",
+          paddingBottom: "2rem", //8
         }}
       >
         <Typography variant="h4" fontWeight="600" textAlign="center">
@@ -41,24 +42,27 @@ const ChooseTopicsPage: NextPage = () => {
           )}
           sx={{ width: '500px', backgroundColor: 'white', borderRadius: 16 }}
         />
-        <Button //TODO: position buttons correctly
-          variant="contained"
-          color="secondary"
-          sx={{ width: "50%", height: "3rem", borderRadius: "0.5rem" }}
-        >
-          <Typography variant="h5" color="white" fontWeight="500">
-            Skip
-          </Typography>
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{ width: "50%", height: "3rem", borderRadius: "0.5rem" }}
-        >
-          <Typography variant="h5" color="white" fontWeight="500">
-            Next
-          </Typography>
-        </Button>
+        <Box
+        sx={{ display: 'flex', justifyContent: 'space-between',  width: 450, marginTop: 5 }}>
+          <Button //TODO: position buttons correctly
+            variant="contained"
+            color="secondary"
+            sx={{ width: "40%", height: "3rem", borderRadius: "0.5rem" }}
+          >
+            <Typography variant="h5" color="white" fontWeight="500">
+              Skip
+            </Typography>
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            sx={{ width: "40%", height: "3rem", borderRadius: "0.5rem" }}
+          >
+            <Typography variant="h5" color="white" fontWeight="500">
+              Next
+            </Typography>
+          </Button>
+        </Box>
       </PrimaryBox>
       {/* </Grid> */}
     </Grid>
