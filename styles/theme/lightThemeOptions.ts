@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
-import { createTheme, responsiveFontSizes } from "@mui/material/styles"
-import { Shadows } from "@mui/material/styles/shadows"
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { Shadows } from "@mui/material/styles/shadows";
 
 export const lightThemeOptions = responsiveFontSizes(
   createTheme({
@@ -38,4 +38,4 @@ export const lightThemeOptions = responsiveFontSizes(
       },
     },
   })
-)
+);

@@ -1,21 +1,21 @@
-import { Button, Grid, Typography } from "@mui/material"
-import { NextPage } from "next"
-import { PrimaryBox } from "src/client/components/Box.component"
-import { TextInput } from "src/client/components/TextInput.component"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { Button, Grid, Typography } from "@mui/material";
+import { NextPage } from "next";
+import { PrimaryBox } from "src/client/components/Box.component";
+import { TextInput } from "src/client/components/TextInput.component";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 const LoginPage: NextPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>()
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
     <Grid
@@ -81,7 +81,7 @@ const LoginPage: NextPage = () => {
       </PrimaryBox>
       {/* </Grid> */}
     </Grid>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
