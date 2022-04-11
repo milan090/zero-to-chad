@@ -18,7 +18,7 @@ const ChooseTopicsPage: NextPage = () => {
       {/* <Grid item width="50%"> */}
       <PrimaryBox
         width="100%"
-        maxWidth="30rem"
+        maxWidth="35rem" //30
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -47,7 +47,7 @@ const ChooseTopicsPage: NextPage = () => {
           <Button //TODO: position buttons correctly
             variant="contained"
             color="secondary"
-            sx={{ width: "40%", height: "3rem", borderRadius: "0.5rem" }}
+            sx={{ width: "30%", height: "3rem", borderRadius: "0.5rem" }}
           >
             <Typography variant="h5" color="white" fontWeight="500">
               Skip
@@ -56,7 +56,7 @@ const ChooseTopicsPage: NextPage = () => {
           <Button
             variant="contained"
             color="secondary"
-            sx={{ width: "40%", height: "3rem", borderRadius: "0.5rem" }}
+            sx={{ width: "30%", height: "3rem", borderRadius: "0.5rem" }}
           >
             <Typography variant="h5" color="white" fontWeight="500">
               Next
