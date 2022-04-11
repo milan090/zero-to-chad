@@ -117,6 +117,5 @@ const ChooseHabitsPage: NextPage = () => {
     </Grid>
   )
 }
-  //TODO: Remove hardcoded Habit values
 
 export default ChooseHabitsPage
