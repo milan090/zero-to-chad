@@ -1,11 +1,14 @@
-import { Box, Button, Typography } from "@mui/material"
-import type { NextPage } from "next"
-import { NextSeo } from "next-seo"
-import { useState } from "react"
-import ProfileIcon from "../public/images/home/carbon_user-avatar.svg"
+import { Box, Button, Typography } from "@mui/material";
+import type { NextPage } from "next";
+import { NextSeo } from "next-seo";
+import ProfileIcon from "../public/images/home/carbon_user-avatar.svg";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "config/firebase.config";
+import { DashboardButton } from "src/client/components/DashboardButton.component";
+import Link from "next/link";
 
 const Home: NextPage = () => {
-  const [isAuth] = useState(false)
+  const [user] = useAuthState(auth);
 
   return (
     <div>
@@ -21,20 +24,22 @@ const Home: NextPage = () => {
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
             Zero To Chad
           </Typography>
-          {isAuth ? (
-            <Button>My Account</Button>
+          {user ? (
+            <DashboardButton />
           ) : (
-            <Button
-              variant="contained"
-              startIcon={<ProfileIcon width="22px" />}
-            >
-              Login
-            </Button>
+            <Link href="/login" passHref>
+              <Button
+                variant="contained"
+                startIcon={<ProfileIcon width="22px" />}
+              >
+                Login
+              </Button>
+            </Link>
           )}
         </Box>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

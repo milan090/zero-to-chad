@@ -1,29 +1,99 @@
-import { Button, Grid, Typography } from "@mui/material"
-import { NextPage } from "next"
-import { PrimaryBox } from "src/client/components/Box.component"
-import { TextInput } from "src/client/components/TextInput.component"
-import { SubmitHandler, useForm } from "react-hook-form"
-import { useRef } from "react"
+import { Button, Grid, Typography } from "@mui/material";
+import { NextPage } from "next";
+import { PrimaryBox } from "src/client/components/Box.component";
+import { TextInput } from "src/client/components/TextInput.component";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useRef } from "react";
+import { createUserWithEmailAndPassword, User } from "firebase/auth";
+import { auth, db } from "config/firebase.config";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
+import { useEffect } from "react";
+import { FirebaseError } from "firebase/app";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Router from "next/router";
+import Link from "next/link";
 
 type Inputs = {
-  username: string
-  email: string
-  password: string
-  cpassword: string
-}
+  username: string;
+  email: string;
+  password: string;
+  cpassword: string;
+};
+
+const createUser = async (user: User, username: string) => {
+  try {
+    await setDoc(doc(db, "users", user.uid), {
+      username,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const signUp = async ({ email, password, username }: Inputs) => {
+  try {
+    const q = await getDocs(
+      query(collection(db, "users"), where("username", "==", username))
+    );
+
+    if (!q.empty) throw { code: "auth/username" };
+
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    createUser(user, username);
+  } catch (err) {
+    const error = err as FirebaseError;
+    const code = error?.code;
+    console.log(error);
+    if (code === "auth/email-already-in-use") {
+      throw { type: "email", message: "Email already in user" };
+    } else if (code == "auth/username") {
+      throw { type: "username", message: "Account with this username exists" };
+    }
+  }
+};
 
 const SignupPage: NextPage = () => {
   const {
     register,
     handleSubmit,
     watch,
+    setError,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<Inputs>();
 
-  const password = useRef({})
-  password.current = watch("password", "")
+  const password = useRef({});
+  password.current = watch("password", "");
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+  const [user] = useAuthState(auth);
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      await signUp(data);
+    } catch (err) {
+      const error = err as { type: string; message: string };
+      console.log("err", error);
+      if (error.type === "email") {
+        setError("email", { message: error.message });
+      } else if (error.type == "username") {
+        setError("username", { message: error.message });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (user) Router.push("/dashboard");
+  }, [user]);
 
   return (
     <Grid
@@ -55,7 +125,8 @@ const SignupPage: NextPage = () => {
             variant="standard"
             sx={{ width: "100%" }}
             {...register("username", { required: "This is required" })}
-            error={!!errors.username?.message}
+            error={!!errors.username}
+            helperText={errors.username?.message}
           />
           <TextInput
             id="email"
@@ -64,7 +135,8 @@ const SignupPage: NextPage = () => {
             type="email"
             sx={{ width: "100%" }}
             {...register("email", { required: "This is required" })}
-            error={!!errors.email?.message}
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
           <TextInput
             id="filled-basic"
@@ -107,11 +179,17 @@ const SignupPage: NextPage = () => {
               Sign Up
             </Typography>
           </Button>
+          <Typography>
+            Have an existing account?
+            <Link href="/login" passHref>
+              <a> Login</a>
+            </Link>
+          </Typography>
         </form>
       </PrimaryBox>
       {/* </Grid> */}
     </Grid>
-  )
-}
+  );
+};
 
-export default SignupPage
+export default SignupPage;

@@ -1,7 +1,7 @@
-import { DefaultSeoProps } from "next-seo"
+import { DefaultSeoProps } from "next-seo";
 
-const titleTemplate = "Zero To Chad | %s"
-const defaultTitle = "Zero To Chad | Self Improvement"
+const titleTemplate = "Zero To Chad | %s";
+const defaultTitle = "Zero To Chad | Self Improvement";
 
 export const SEO: DefaultSeoProps = {
   defaultTitle,
@@ -17,4 +17,4 @@ export const SEO: DefaultSeoProps = {
     site: "@site",
     cardType: "summary_large_image",
   },
-}
+};

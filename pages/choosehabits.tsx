@@ -115,7 +115,7 @@ const ChooseHabitsPage: NextPage = () => {
       </PrimaryBox>
       {/* </Grid> */}
     </Grid>
-  )
-}
+  );
+};
 
 export default ChooseHabitsPage
