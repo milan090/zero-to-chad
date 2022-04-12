@@ -50,7 +50,7 @@ interface Props {
    * You won't need it on your project.
    */
   children: React.ReactNode;
-  appBarChildren: React.ReactNode;
+  appBarChildren?: React.ReactNode;
 }
 
 export const SideBar: React.FC<Props> = ({ children, appBarChildren }) => {

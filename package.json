@@ -24,6 +24,7 @@
     "react-firebase-hooks": "^5.0.3",
     "react-hook-form": "^7.29.0",
     "react-hot-toast": "^2.2.0",
+    "short-uuid": "^4.2.0",
     "zustand": "^3.7.2"
   },
   "devDependencies": {
