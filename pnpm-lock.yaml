@@ -29,6 +29,7 @@ specifiers:
   react-firebase-hooks: ^5.0.3
   react-hook-form: ^7.29.0
   react-hot-toast: ^2.2.0
+  short-uuid: ^4.2.0
   typescript: 4.6.3
   zustand: ^3.7.2
 
@@ -48,6 +49,7 @@ dependencies:
   react-firebase-hooks: 5.0.3_firebase@9.6.10+react@18.0.0
   react-hook-form: 7.29.0_react@18.0.0
   react-hot-toast: 2.2.0_aee3b59847029cfc9aee5217330a3daf
+  short-uuid: 4.2.0
   zustand: 3.7.2_react@18.0.0
 
 devDependencies:
@@ -2757,6 +2759,10 @@ packages:
     dependencies:
       color-convert: 2.0.1
 
+  /any-base/1.1.0:
+    resolution: {integrity: sha512-uMgjozySS8adZZYePpaWs8cxB9/kdzmpX6SgJZ+wbz1K5eYk5QMYDVJaZKhxyIHUdnnJkfR7SVgStgH7LkGUyg==}
+    dev: false
+
   /argparse/2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
     dev: true
@@ -4654,6 +4660,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /short-uuid/4.2.0:
+    resolution: {integrity: sha512-r3cxuPPZSuF0QkKsK9bBR7u+7cwuCRzWzgjPh07F5N2iIUNgblnMHepBY16xgj5t1lG9iOP9k/TEafY1qhRzaw==}
+    engines: {node: '>=8'}
+    dependencies:
+      any-base: 1.1.0
+      uuid: 8.3.2
+    dev: false
+
   /side-channel/1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
     dependencies:
@@ -4925,6 +4939,11 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
+    dev: false
+
+  /uuid/8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
     dev: false
 
   /v8-compile-cache/2.3.0:

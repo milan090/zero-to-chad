@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import DocumentIcon from "public/images/dashboard/carbon_document.svg";
 import CollectionIcon from "public/images/dashboard/fluent_collections-20-regular.svg";
+import Link from "next/link";
 
 const style = {
   position: "absolute",
@@ -70,6 +71,7 @@ export const CreateButton: React.FC = () => {
               <Typography fontWeight="600" variant="h5">
                 Post
               </Typography>
+
               <Typography
                 textAlign="center"
                 sx={{ marginTop: "0.25rem", marginBottom: "1rem" }}
@@ -77,13 +79,15 @@ export const CreateButton: React.FC = () => {
                 Lorem ipsum some stuff like that goes here lorem ipsum okay, I
                 am too lazy to find lorem ipsum so ill just type some shitz here
               </Typography>
-              <Button
-                variant="contained"
-                color="info"
-                sx={{ borderRadius: "0.5rem" }}
-              >
-                Create
-              </Button>
+              <Link href="/dashboard/my-posts/create/post" passHref>
+                <Button
+                  variant="contained"
+                  color="info"
+                  sx={{ borderRadius: "0.5rem" }}
+                >
+                  Create
+                </Button>
+              </Link>
             </Paper>
 
             <Paper
