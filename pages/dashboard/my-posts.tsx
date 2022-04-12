@@ -56,13 +56,11 @@ const DashboardPage: NextPage = () => {
           <Card sx={{ display: "flex", position: "relative", width: 487, height: 253, borderRadius: 4, marginTop: 4, marginLeft: 4 }}>
             <CardContent>
               <AuthorIcon />
-              <Typography fontWeight="400" sx={{ textAlign: "center", float: "right",
-               paddingLeft: 5, paddingTop: 1 }}> “Never gonna give you up <br />
-                                    Never gonna let you down <br />
-                                    Never gonna run around and desert <br />
-                                    you <br />
-                                    Never gonna make you cry” </Typography>
-              <Typography fontWeight="600" sx={{ paddingLeft: 30, paddingTop: 5 }}>Rick Astley</Typography>
+              <Box sx={{ textAlign: "center", float: "right", width: 250, marginLeft: 5, 
+              marginTop: 1 }}>
+                <Typography fontWeight="400"> “Never gonna give you up  Never gonna let you down  Never gonna run around and desert you  Never gonna make you cry” </Typography>
+                <Typography fontWeight="600" sx={{marginTop: 1 }}>Rick Astley</Typography>
+              </Box>
             </CardContent>
           </Card>
         </Box>
