@@ -11,7 +11,7 @@ import AuthorIcon from 'public/images/dashboard/AuthorPic.svg';
 
 //TODO: Remove hardcoded values
 
-const DashboardPage: NextPage = () => {
+const MyPostsPage: NextPage = () => {
   const appBarChildren = <CreateButton />;
 
   return (
@@ -28,7 +28,7 @@ const DashboardPage: NextPage = () => {
               Stress Management for Noobs
             </Typography>
           </CardContent>
-          
+
           <CardContent>
             <Box sx={{ position: "relative", top: 40 }}>
               <Typography><ViewsIcon /> 11,352</Typography>
@@ -69,4 +69,4 @@ const DashboardPage: NextPage = () => {
   );
 };
 
-export default DashboardPage;
+export default MyPostsPage;
