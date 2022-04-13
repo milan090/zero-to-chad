@@ -1,24 +1,26 @@
-import * as React from 'react';
-import { Button, Grid, Typography, Box, Card, CardActionArea, CardContent, Checkbox } from "@mui/material"
-import { NextPage } from "next"
-import { PrimaryBox } from "src/client/components/Box.component"
-import CircleChecked from '@mui/icons-material/CheckCircle';
-import CircleUnchecked from '@mui/icons-material/RadioButtonUnchecked';
-//BIG TODO: remove hardcoded values and make it dynamic 
+import * as React from "react";
+import {
+  Button,
+  Grid,
+  Typography,
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  Checkbox,
+} from "@mui/material";
+import { NextPage } from "next";
+import { PrimaryBox } from "src/client/components/Box.component";
+import CircleChecked from "@mui/icons-material/CheckCircle";
+import CircleUnchecked from "@mui/icons-material/RadioButtonUnchecked";
+//BIG TODO: remove hardcoded values and make it dynamic
 const ChooseHabitsPage: NextPage = () => {
-
   const [cb1, cb1Set] = React.useState(false);
   const [cb2, cb2Set] = React.useState(false);
 
   const handleClick = () => {
-    if (cb1 == true) {
-      console.log('Card "Wake Up Early" selected')
-    }
-    if (cb2 == true) {
-      console.log('Card "Workout" selected')
-    }
-  }
-
+    console.log();
+  };
 
   return (
     <Grid
@@ -42,19 +44,18 @@ const ChooseHabitsPage: NextPage = () => {
         }}
       >
         <Typography variant="h4" fontWeight="600" textAlign="center">
-            Select Your Habits
-        </Typography> 
+          Select Your Habits
+        </Typography>
 
-        <Box 
-        sx={{ display: 'flex', gap: 3,  width: 1050 }}>
-          <Card
-          sx={{ height: 150, width: 230, borderRadius: 4 }}>
+        <Box sx={{ display: "flex", gap: 3, width: 1050 }}>
+          <Card sx={{ height: 150, width: 230, borderRadius: 4 }}>
             <CardActionArea
-            onClick={() => {cb1Set(old => !old)}}>
+              onClick={() => {
+                cb1Set((old) => !old);
+              }}
+            >
               <CardContent>
-                <Typography fontWeight="600">
-                  Wake Up Early
-                </Typography>
+                <Typography fontWeight="600">Wake Up Early</Typography>
                 <Typography fontWeight="400">
                   lorem ipsum waking early makes you feel fresh and energetic
                 </Typography>
@@ -68,14 +69,14 @@ const ChooseHabitsPage: NextPage = () => {
               </CardContent>
             </CardActionArea>
           </Card>
-          <Card
-          sx={{ height: 150, width: 230, borderRadius: 4 }}>
+          <Card sx={{ height: 150, width: 230, borderRadius: 4 }}>
             <CardActionArea
-            onClick={() => {cb2Set(old => !old)}}>
+              onClick={() => {
+                cb2Set((old) => !old);
+              }}
+            >
               <CardContent>
-                <Typography fontWeight="600">
-                  Workout
-                </Typography>
+                <Typography fontWeight="600">Workout</Typography>
                 <Typography fontWeight="400">
                   lorem ipsum waking early makes you feel fresh and energetic
                 </Typography>
@@ -91,7 +92,13 @@ const ChooseHabitsPage: NextPage = () => {
           </Card>
         </Box>
         <Box
-        sx={{ display: 'flex', justifyContent: 'space-between',  width: 950, marginTop: 5 }}>
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: 950,
+            marginTop: 5,
+          }}
+        >
           <Button
             variant="contained"
             color="secondary"
@@ -118,4 +125,4 @@ const ChooseHabitsPage: NextPage = () => {
   );
 };
 
-export default ChooseHabitsPage
+export default ChooseHabitsPage;

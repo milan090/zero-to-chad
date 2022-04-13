@@ -102,12 +102,12 @@ export const SideBar: React.FC<Props> = ({ children, appBarChildren }) => {
     <Box sx={{ display: "flex", backgroundColor: "primary" }}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position="absolute"
         sx={{
           background: lightThemeOptions.palette.background.default,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          mt: "1rem",
+          pt: "1rem",
         }}
       >
         <Toolbar>

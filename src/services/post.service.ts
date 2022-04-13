@@ -3,10 +3,8 @@ import { db, storage } from "config/firebase.config";
 import { generate } from "short-uuid";
 import { doc, setDoc } from "firebase/firestore";
 
-type PostType = "regular" | "quote";
-
 export interface RegularPostData {
-  type: PostType;
+  type: "regular";
   title: string;
   content: string;
   image: File | null;
@@ -16,7 +14,7 @@ export interface RegularPostData {
 }
 
 interface RegularPostDoc {
-  type: PostType;
+  type: "regular";
   title: string;
   content: string;
   image: string | null;
@@ -25,8 +23,31 @@ interface RegularPostDoc {
   authorUsername: string;
 }
 
-export const createRegularPost = async (data: RegularPostData) => {
-  const regularPostDoc: RegularPostDoc = {
+export interface QuotePostData {
+  type: "quote";
+  author: string;
+  content: string;
+  image: File | null;
+  collectionId?: string;
+  authorUid: string;
+  authorUsername: string;
+}
+
+interface QuotePostDoc {
+  type: "quote";
+  author: string;
+  content: string;
+  image: string | null;
+  collectionId?: string;
+  authorUid: string;
+  authorUsername: string;
+}
+
+type PostData = RegularPostData | QuotePostData;
+type PostDoc = RegularPostDoc | QuotePostDoc;
+
+export const createRegularPost = async (data: PostData) => {
+  const regularPostDoc: PostDoc = {
     ...data,
     image: null,
   };

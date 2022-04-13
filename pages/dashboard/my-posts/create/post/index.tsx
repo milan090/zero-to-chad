@@ -5,7 +5,7 @@ import QuotesIcon from "public/images/dashboard/bi_quote.svg";
 import { SideBar } from "src/client/layouts/SideBar.layout";
 import Link from "next/link";
 
-const CreatePostPage: NextPage = () => {
+const CreateRegularPostPage: NextPage = () => {
   return (
     <SideBar>
       <Box
@@ -79,17 +79,19 @@ const CreatePostPage: NextPage = () => {
             Lorem ipsum some stuff like that goes here lorem ipsum okay, I am
             too lazy to find lorem ipsum so ill just type some shitz here
           </Typography>
-          <Button
-            variant="contained"
-            color="info"
-            sx={{ borderRadius: "0.5rem" }}
-          >
-            Create
-          </Button>
+          <Link href="/dashboard/my-posts/create/post/quote" passHref>
+            <Button
+              variant="contained"
+              color="info"
+              sx={{ borderRadius: "0.5rem" }}
+            >
+              Create
+            </Button>
+          </Link>
         </Paper>
       </Box>
     </SideBar>
   );
 };
 
-export default CreatePostPage;
+export default CreateRegularPostPage;
