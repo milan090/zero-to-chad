@@ -1,9 +1,25 @@
-import { Button, Grid, Typography } from "@mui/material";
-import { NextPage } from "next";
-import { PrimaryBox } from "src/client/components/Box.component";
-import { TextInput } from "src/client/components/TextInput.component";
-
+import * as React from 'react';
+import { Button, Grid, Typography, Box, Card, CardActionArea, CardContent, Checkbox } from "@mui/material"
+import { NextPage } from "next"
+import { PrimaryBox } from "src/client/components/Box.component"
+import CircleChecked from '@mui/icons-material/CheckCircle';
+import CircleUnchecked from '@mui/icons-material/RadioButtonUnchecked';
+//BIG TODO: remove hardcoded values and make it dynamic 
 const ChooseHabitsPage: NextPage = () => {
+
+  const [cb1, cb1Set] = React.useState(false);
+  const [cb2, cb2Set] = React.useState(false);
+
+  const handleClick = () => {
+    if (cb1 == true) {
+      console.log('Card "Wake Up Early" selected')
+    }
+    if (cb2 == true) {
+      console.log('Card "Workout" selected')
+    }
+  }
+
+
   return (
     <Grid
       container
@@ -16,59 +32,90 @@ const ChooseHabitsPage: NextPage = () => {
       {/* <Grid item width="50%"> */}
       <PrimaryBox
         width="100%"
-        maxWidth="30rem"
+        maxWidth="65rem" //30
         sx={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "center", //center
           flexWrap: "wrap",
           gap: "2rem",
-          paddingBottom: "8rem",
+          paddingBottom: "2rem", //8
         }}
       >
         <Typography variant="h4" fontWeight="600" textAlign="center">
-          Choose Your Habits
-        </Typography>
-        <TextInput
-          id="filled-basic"
-          label="Username"
-          type="text"
-          variant="standard"
-          sx={{ width: "100%" }}
-        />
-        <TextInput
-          id="filled-basic"
-          label="Email"
-          type="email"
-          variant="standard"
-          sx={{ width: "100%" }}
-        />
-        <TextInput
-          id="filled-basic"
-          label="Password"
-          type="password"
-          variant="standard"
-          sx={{ width: "100%" }}
-        />
-        <TextInput
-          id="filled-basic"
-          label="Confirm Password"
-          type="password"
-          variant="standard"
-          sx={{ width: "100%" }}
-        />
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{ width: "100%", height: "3rem", borderRadius: "0.5rem" }}
-        >
-          <Typography variant="h5" color="white" fontWeight="500">
-            Register
-          </Typography>
-        </Button>
+            Select Your Habits
+        </Typography> 
+
+        <Box 
+        sx={{ display: 'flex', gap: 3,  width: 1050 }}>
+          <Card
+          sx={{ height: 150, width: 230, borderRadius: 4 }}>
+            <CardActionArea
+            onClick={() => {cb1Set(old => !old)}}>
+              <CardContent>
+                <Typography fontWeight="600">
+                  Wake Up Early
+                </Typography>
+                <Typography fontWeight="400">
+                  lorem ipsum waking early makes you feel fresh and energetic
+                </Typography>
+                <Checkbox
+                  icon={<CircleUnchecked />}
+                  checkedIcon={<CircleChecked />}
+                  style={{ float: "right", bottom: 106, left: 10 }}
+                  checked={cb1}
+                  //color="#3297FD"
+                />
+              </CardContent>
+            </CardActionArea>
+          </Card>
+          <Card
+          sx={{ height: 150, width: 230, borderRadius: 4 }}>
+            <CardActionArea
+            onClick={() => {cb2Set(old => !old)}}>
+              <CardContent>
+                <Typography fontWeight="600">
+                  Workout
+                </Typography>
+                <Typography fontWeight="400">
+                  lorem ipsum waking early makes you feel fresh and energetic
+                </Typography>
+                <Checkbox
+                  icon={<CircleUnchecked />}
+                  checkedIcon={<CircleChecked />}
+                  style={{ float: "right", bottom: 106, left: 10 }}
+                  checked={cb2}
+                  //color="#3297FD"
+                />
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Box>
+        <Box
+        sx={{ display: 'flex', justifyContent: 'space-between',  width: 950, marginTop: 5 }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            sx={{ width: "13rem", height: "2rem", borderRadius: "0.5rem" }}
+          >
+            <Typography variant="h5" color="white" fontWeight="500">
+              Skip
+            </Typography>
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleClick}
+            sx={{ width: "13rem", height: "2rem", borderRadius: "0.5rem" }}
+          >
+            <Typography variant="h5" color="white" fontWeight="500">
+              Next
+            </Typography>
+          </Button>
+        </Box>
       </PrimaryBox>
       {/* </Grid> */}
     </Grid>
   );
 };
 
-export default ChooseHabitsPage;
+export default ChooseHabitsPage

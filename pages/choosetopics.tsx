@@ -18,7 +18,7 @@ const ChooseTopicsPage: NextPage = () => {
       {/* <Grid item width="50%"> */}
       <PrimaryBox
         width="100%"
-        maxWidth="30rem"
+        maxWidth="35rem" //30
         sx={{
           display: "flex",
           justifyContent: "center",
