@@ -9,13 +9,15 @@ import Rectangle4 from "public/images/dashboard/Rectangle4.svg";
 import Rectangle5 from "public/images/dashboard/Rectangle5.svg";
 import Ellipse from "public/images/dashboard/Ellipse.svg";
 
-export { HeartIcon };
-export { ViewsIcon };
-export { AuthorIcon };
-export { ShareIcon };
-export { Rectangle1 };
-export { Rectangle2 };
-export { Rectangle3 };
-export { Rectangle4 };
-export { Rectangle5 };
-export { Ellipse };
+export {
+  HeartIcon,
+  ViewsIcon,
+  AuthorIcon,
+  ShareIcon,
+  Rectangle1,
+  Rectangle2,
+  Rectangle3,
+  Rectangle4,
+  Rectangle5,
+  Ellipse,
+};
