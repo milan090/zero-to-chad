@@ -12,9 +12,9 @@ import { SideBar } from "src/client/layouts/SideBar.layout";
 import ViewsIcon from "public/images/dashboard/views.svg";
 import HeartIcon from "public/images/dashboard/ant-design_heart-filled.svg";
 import ShareIcon from "public/images/dashboard/ShareIcon.svg";
+import AuthorIcon from "public/images/dashboard/AuthorPic.svg";
 import Rectangle1 from "public/images/dashboard/Rectangle1.svg";
 import Rectangle2 from "public/images/dashboard/Rectangle2.svg";
-import AuthorIcon from "public/images/dashboard/AuthorPic.svg";
 
 //TODO: Remove hardcoded values
 
@@ -29,8 +29,8 @@ const MyPostsPage: NextPage = () => {
         </Typography>
 
         <Card sx={{ width: 256, height: 350, borderRadius: 4 }}>
+          <Rectangle1 />
           <CardContent>
-            <Rectangle1 style={{ position: "relative", top: -16, left: -16 }} />
             <Typography fontWeight="600">
               Stress Management for Noobs
             </Typography>
@@ -73,10 +73,8 @@ const MyPostsPage: NextPage = () => {
         </Typography>
         <Box sx={{ display: "flex" }}>
           <Card sx={{ width: 487, height: 501, borderRadius: 4, marginTop: 4 }}>
+            <Rectangle2 />
             <CardContent>
-              <Rectangle2
-                style={{ position: "relative", top: -16, left: -16 }}
-              />
               <Typography fontWeight="600">Making a Todo List</Typography>
               <Typography paragraph sx={{ paddingTop: 1 }}>
                 Lorem ipsum shit goes here okLorem ipsum shit goes here okLorem
