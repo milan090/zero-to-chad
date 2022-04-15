@@ -19,6 +19,8 @@ import {
   Ellipse2,
 } from "src/icons";
 
+import { smolQuote } from "src/client/components/Quote.component";
+
 const DashboardPage: NextPage = () => {
   const { username } = useUserStore(({ username }) => ({ username }));
 
@@ -182,6 +184,7 @@ const DashboardPage: NextPage = () => {
               >
                 Quote of the Day
               </Typography>
+
               <Card
                 style={{ backgroundColor: alpha("#FDD47A", 0.65) }}
                 sx={{

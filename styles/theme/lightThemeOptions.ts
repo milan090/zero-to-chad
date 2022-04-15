@@ -15,6 +15,10 @@ export const lightThemeOptions = responsiveFontSizes(
       background: {
         default: "#FDF7E7",
       },
+      info: {
+        main: "#4CA4FD",
+        contrastText: "#fff",
+      },
     },
     shadows: Array(25).fill("none") as Shadows,
     typography: {

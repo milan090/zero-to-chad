@@ -21,6 +21,8 @@ interface RegularPostDoc {
   collectionId?: string;
   authorUid: string;
   authorUsername: string;
+  likes: number;
+  views: number;
 }
 
 export interface QuotePostData {
@@ -41,6 +43,8 @@ interface QuotePostDoc {
   collectionId?: string;
   authorUid: string;
   authorUsername: string;
+  likes: number;
+  views: number;
 }
 
 type PostData = RegularPostData | QuotePostData;
@@ -50,6 +54,8 @@ export const createRegularPost = async (data: PostData) => {
   const regularPostDoc: PostDoc = {
     ...data,
     image: null,
+    likes: 0,
+    views: 0,
   };
   const postId = generate();
   try {

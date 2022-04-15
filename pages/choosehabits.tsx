@@ -1,26 +1,69 @@
-import * as React from "react";
+/* eslint-disable indent */
+import { useState, useEffect } from "react";
 import {
   Button,
   Grid,
   Typography,
   Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  Checkbox,
+  CircularProgress,
+  Skeleton,
 } from "@mui/material";
 import { NextPage } from "next";
 import { PrimaryBox } from "src/client/components/Box.component";
-import CircleChecked from "@mui/icons-material/CheckCircle";
-import CircleUnchecked from "@mui/icons-material/RadioButtonUnchecked";
-//BIG TODO: remove hardcoded values and make it dynamic
-const ChooseHabitsPage: NextPage = () => {
-  const [cb1, cb1Set] = React.useState(false);
-  const [cb2, cb2Set] = React.useState(false);
+import { HabitManageCard } from "src/client/components/HabitManageCard.component";
+import { HabitInfo } from "src/types/habit.types";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { collection, doc, updateDoc } from "firebase/firestore";
+import { db } from "config/firebase.config";
+import { habitInfoConverter } from "src/services/habits.service";
+import { useUserStore } from "src/client/store/user.store";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-  const handleClick = () => {
-    console.log();
+//BIG TODO: remove hardcoded values and make it dynamic
+
+const ChooseHabitsPage: NextPage = () => {
+  const router = useRouter();
+  const [userUid, hasCompletedOnBoarding] = useUserStore((state) => [
+    state.uid,
+    state.hasCompletedOnBoarding,
+  ]);
+  const [habits, loading, error] = useCollectionData<HabitInfo>(
+    collection(db, "habits").withConverter(habitInfoConverter)
+  );
+  const [selectedHabits, setSelectedHabits] = useState<string[]>([]);
+  const [saving, setSaving] = useState(false);
+
+  const setCardSelected = (habitId: string, value: boolean) => {
+    if (value) {
+      setSelectedHabits([...selectedHabits, habitId]);
+    } else {
+      setSelectedHabits(
+        selectedHabits.filter((selectedHabitId) => selectedHabitId !== habitId)
+      );
+    }
   };
+
+  const handleNextClick = () => {
+    const userDocRef = doc(db, "users", userUid);
+    setSaving(true);
+    updateDoc(userDocRef, {
+      habits: selectedHabits,
+      hasCompletedOnBoarding: true,
+    })
+      .then(() => {
+        console.log("Updated habits");
+        router.push("/dashboard");
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setSaving(false));
+  };
+
+  useEffect(() => {
+    if (hasCompletedOnBoarding) {
+      router.push("/dashboard");
+    }
+  }, [hasCompletedOnBoarding]);
 
   return (
     <Grid
@@ -47,49 +90,36 @@ const ChooseHabitsPage: NextPage = () => {
           Select Your Habits
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 3, width: 1050 }}>
-          <Card sx={{ height: 150, width: 230, borderRadius: 4 }}>
-            <CardActionArea
-              onClick={() => {
-                cb1Set((old) => !old);
-              }}
-            >
-              <CardContent>
-                <Typography fontWeight="600">Wake Up Early</Typography>
-                <Typography fontWeight="400">
-                  lorem ipsum waking early makes you feel fresh and energetic
-                </Typography>
-                <Checkbox
-                  icon={<CircleUnchecked />}
-                  checkedIcon={<CircleChecked />}
-                  style={{ float: "right", bottom: 106, left: 10 }}
-                  checked={cb1}
-                  //color="#3297FD"
+        <Box sx={{ display: "flex", gap: 3, width: 1050, minHeight: "50vh" }}>
+          {error && "Error"}
+          {loading &&
+            [1, 2, 3].map((i) => (
+              <Box key={i}>
+                <Skeleton
+                  variant="rectangular"
+                  animation="wave"
+                  width={210}
+                  height={118}
+                  sx={{ borderRadius: "0.5rem" }}
                 />
-              </CardContent>
-            </CardActionArea>
-          </Card>
-          <Card sx={{ height: 150, width: 230, borderRadius: 4 }}>
-            <CardActionArea
-              onClick={() => {
-                cb2Set((old) => !old);
-              }}
-            >
-              <CardContent>
-                <Typography fontWeight="600">Workout</Typography>
-                <Typography fontWeight="400">
-                  lorem ipsum waking early makes you feel fresh and energetic
-                </Typography>
-                <Checkbox
-                  icon={<CircleUnchecked />}
-                  checkedIcon={<CircleChecked />}
-                  style={{ float: "right", bottom: 106, left: 10 }}
-                  checked={cb2}
-                  //color="#3297FD"
+              </Box>
+            ))}
+          {!loading &&
+            !!habits &&
+            habits.map((habit) => {
+              const { id, name, description } = habit;
+              const checked = !!selectedHabits.find((i) => i === id);
+              return (
+                <HabitManageCard
+                  name={name}
+                  description={description}
+                  checked={checked}
+                  key={id}
+                  variant="white"
+                  handleClick={() => setCardSelected(id, !checked)}
                 />
-              </CardContent>
-            </CardActionArea>
-          </Card>
+              );
+            })}
         </Box>
         <Box
           sx={{
@@ -99,23 +129,29 @@ const ChooseHabitsPage: NextPage = () => {
             marginTop: 5,
           }}
         >
+          <Link passHref href="/dashboard">
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ width: "6rem", height: "2rem", borderRadius: "0.5rem" }}
+            >
+              <Typography color="white" fontWeight="500">
+                Skip
+              </Typography>
+            </Button>
+          </Link>
           <Button
             variant="contained"
             color="secondary"
-            sx={{ width: "13rem", height: "2rem", borderRadius: "0.5rem" }}
+            onClick={handleNextClick}
+            sx={{ width: "6rem", height: "2rem", borderRadius: "0.5rem" }}
           >
-            <Typography variant="h5" color="white" fontWeight="500">
-              Skip
-            </Typography>
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleClick}
-            sx={{ width: "13rem", height: "2rem", borderRadius: "0.5rem" }}
-          >
-            <Typography variant="h5" color="white" fontWeight="500">
-              Next
+            <Typography color="white" fontWeight="500">
+              {saving ? (
+                <CircularProgress size={22} sx={{ color: "white" }} />
+              ) : (
+                "Next"
+              )}
             </Typography>
           </Button>
         </Box>
