@@ -31,6 +31,8 @@ const createUser = async (user: User, username: string) => {
   try {
     await setDoc(doc(db, "users", user.uid), {
       username,
+      habits: [],
+      hasCompletedOnBoarding: false,
     });
   } catch (error) {
     console.log(error);

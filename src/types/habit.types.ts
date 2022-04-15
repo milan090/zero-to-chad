@@ -1,10 +1,25 @@
-type HabitFrequency = "Everyday";
+import { Timestamp } from "firebase/firestore";
 
-export interface Habit {
+// type HabitFrequency = "Everyday";
+
+export interface HabitInfoDoc {
   iconUrl: string;
   color: string;
   name: string;
-  frequency: HabitFrequency;
+  description: string;
+}
+
+export interface HabitInfo extends HabitInfoDoc {
+  id: string;
+}
+
+export interface UserHabitDataDoc {
+  lastCheckedInDate: Timestamp;
   streak: number;
-  uid: string;
+}
+
+export interface UserHabitData {
+  lastCheckedInDate: Date;
+  streak: number;
+  id: string;
 }

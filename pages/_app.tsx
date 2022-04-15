@@ -19,7 +19,7 @@ import { SEO } from "../config/seo.config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "config/firebase.config";
 import { useUserStore } from "src/client/store/user.store";
-import { doc, DocumentReference, getDoc } from "firebase/firestore";
+import { doc, DocumentReference, onSnapshot } from "firebase/firestore";
 import { UserDoc } from "src/types/User.types";
 import { useEffect } from "react";
 
@@ -32,25 +32,45 @@ const clientSideEmotionCache = createEmotionCache();
 const lightTheme = createTheme(lightThemeOptions);
 
 const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
-  const [user] = useAuthState(auth);
-  const { setUser } = useUserStore(({ setUser }) => ({ setUser }));
+  const [setUser, setLoading] = useUserStore(({ setUser, setLoading }) => [
+    setUser,
+    setLoading,
+  ]);
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const [user, authLoading] = useAuthState(auth);
 
   useEffect(() => {
-    if (user) {
-      const docRef = doc(db, "users", user.uid) as DocumentReference<UserDoc>;
-      getDoc<UserDoc>(docRef).then((res) => {
-        const username = res.data()?.username;
-        if (username) {
-          setUser({
-            username,
-            email: user.email as string,
-            uid: user.uid,
-          });
-        }
-      });
+    console.log("auth loading:", authLoading);
+    if (!authLoading) {
+      console.log(user);
+      if (user) {
+        const docRef = doc(db, "users", user.uid) as DocumentReference<UserDoc>;
+
+        const unsub = onSnapshot(docRef, (doc) => {
+          setLoading(true);
+          const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+          console.log("Loaded user from:", source);
+          const userData = doc.data();
+          console.log(userData);
+          if (userData) {
+            setUser({
+              username: userData.username,
+              email: user.email as string,
+              uid: user.uid,
+              habits: userData.habits || [],
+              hasCompletedOnBoarding: userData?.hasCompletedOnBoarding || false,
+              topics: userData.topics || [],
+            });
+          }
+          setLoading(false);
+        });
+
+        return unsub;
+      } else {
+        setLoading(false);
+      }
     }
-  }, [user]);
+  }, [user, authLoading]);
 
   return (
     <>
