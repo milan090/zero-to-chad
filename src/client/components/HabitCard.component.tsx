@@ -15,14 +15,24 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "config/firebase.config";
-import { getYesterdayDate } from "src/services/helpers";
+import { getYesterdayDate, willOccur } from "src/services/helpers";
 import CircleChecked from "@mui/icons-material/CheckCircle";
+import toast from "react-hot-toast";
 
 interface Props extends HabitInfo {
   handleCick?: () => void;
   frequency?: string;
   userHabitData: UserHabitData | undefined;
 }
+
+const toastBabySteps = () => {
+  // probability of 3
+  if (willOccur(1 / 3)) {
+    toast.success("Start with Baby steps. One at a time. Keep Grinding ‎️‍🔥", {
+      duration: 5000,
+    });
+  }
+};
 
 export const HabitCard: React.FC<Props> = ({
   iconUrl,
@@ -46,24 +56,28 @@ export const HabitCard: React.FC<Props> = ({
       id
     ) as DocumentReference<UserHabitDataDoc>;
 
-    console.log(userHabitData);
     if (userHabitData) {
       const { lastCheckedInDate } = userHabitData;
       const isStreak =
         lastCheckedInDate.toDateString() === getYesterdayDate().toDateString();
 
-      console.log(
-        "updating doc",
-        ref.path,
-        Timestamp.now().toDate().toDateString()
-      );
-
+      const newStreak = isStreak ? userHabitData.streak + 1 : 0; // Reset streak if last check in was not yesterday
       updateDoc(ref, {
-        streak: isStreak ? userHabitData.streak + 1 : 0, // Reset streak if last check in was not yesterday
+        streak: newStreak,
         lastCheckedInDate: Timestamp.now(),
       })
         .then(() => {
-          console.log("Updated");
+          console.log(newStreak);
+          if (newStreak === 1) {
+            toastBabySteps();
+          } else if (newStreak === 2 && willOccur(3 / 4)) {
+            toast.success(
+              "Congrats on making it to the 2nd day! Keep Grinding ‎️‍🔥",
+              {
+                duration: 5000,
+              }
+            );
+          }
         })
         .catch((err) => console.log(err));
     } else {
@@ -71,6 +85,7 @@ export const HabitCard: React.FC<Props> = ({
         lastCheckedInDate: Timestamp.now(),
         streak: 1,
       });
+      toastBabySteps();
     }
   };
   return (
