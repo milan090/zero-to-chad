@@ -99,13 +99,15 @@ const CreatePage: NextPage = () => {
               Lorem ipsum some stuff like that goes here lorem ipsum okay, I am
               too lazy to find lorem ipsum so ill just type some shitz here
             </Typography>
-            <Button
-              variant="contained"
-              color="info"
-              sx={{ borderRadius: "0.5rem" }}
-            >
-              Create
-            </Button>
+            <NextLink href="/dashboard/my-posts/create/collection" passHref>
+              <Button
+                variant="contained"
+                color="info"
+                sx={{ borderRadius: "0.5rem" }}
+              >
+                Create
+              </Button>
+            </NextLink>
           </Paper>
         </Box>
       </Box>

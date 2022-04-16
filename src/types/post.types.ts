@@ -8,8 +8,8 @@ export interface RegularPostInputs {
   authorUsername: string;
 }
 
-interface RegularPostDoc extends Omit<RegularPostInputs, "image"> {
-  imageUrl: string | null;
+export interface RegularPostDoc extends Omit<RegularPostInputs, "image"> {
+  imageUrl?: string;
   likes: number;
   views: number;
 }
@@ -32,7 +32,7 @@ export interface QuotePostInputs {
 }
 
 export interface QuotePostDoc extends Omit<QuotePostInputs, "image"> {
-  imageUrl: string | null;
+  imageUrl?: string;
   likes: number;
   views: number;
 }
@@ -43,3 +43,4 @@ export interface QuotePost extends QuotePostDoc {
 
 export type PostInputs = RegularPostInputs | QuotePostInputs;
 export type PostDoc = RegularPostDoc | QuotePostDoc;
+export type Post = RegularPost | QuotePost;
