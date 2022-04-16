@@ -2,14 +2,13 @@ import { Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { PrimaryBox } from "src/client/components/Box.component";
 import Box from "@mui/material/Box";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "config/firebase.config";
 import { useUserStore } from "src/client/store/user.store";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { TopicsSelecter } from "src/client/components/TopicsSelecter.component";
 
 const ChooseTopicsPage: NextPage = () => {
   const router = useRouter();
@@ -27,7 +26,6 @@ const ChooseTopicsPage: NextPage = () => {
       topics: selectedTopics,
     })
       .then(() => {
-        console.log("Updated habits");
         router.push("/choosehabits");
       })
       .catch((err) => console.log(err))
@@ -64,27 +62,11 @@ const ChooseTopicsPage: NextPage = () => {
         <Typography variant="h4" fontWeight="600" textAlign="center">
           Select The Topics That Interest You
         </Typography>
-        <Autocomplete //TODO: remove outline
-          multiple
-          limitTags={2}
-          id="multiple-limit-tags"
-          options={topics}
-          getOptionLabel={(option) => option.name}
-          onChange={(e, value) => setselectedTopics(value.map((e) => e.name))}
-          renderInput={(params) => (
-            <TextField {...params} label="Topics" placeholder="Science" />
-          )}
-          sx={{
-            width: "500px",
-            backgroundColor: "white",
-            borderRadius: 2,
-            "& .MuiOutlinedInput-notchedOutline": {
-              opacity: 0,
-            },
-            "& .MuiInputLabel-shrink": {
-              color: "grey !important",
-            },
-          }}
+        <TopicsSelecter
+          handleChange={(topics) =>
+            setselectedTopics(topics.map((topic) => topic.id))
+          }
+          bgColor="white"
         />
         <Box
           sx={{
@@ -126,11 +108,5 @@ const ChooseTopicsPage: NextPage = () => {
     </Grid>
   );
 };
-
-const topics = [
-  //TODO: replace with db
-  { name: "Technology" },
-  { name: "Science" },
-];
 
 export default ChooseTopicsPage;

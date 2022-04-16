@@ -8,9 +8,14 @@ import { Topic } from "src/types/topic.types";
 type Props = {
   handleChange: (topics: Topic[]) => void;
   label?: string;
+  bgColor?: string;
 };
 
-export const TopicsSelecter: React.FC<Props> = ({ handleChange, label }) => {
+export const TopicsSelecter: React.FC<Props> = ({
+  handleChange,
+  label,
+  bgColor,
+}) => {
   const [topics, loading] = useCollectionData<Topic>(
     collection(db, "topics").withConverter(topicConverter)
   );
@@ -33,7 +38,7 @@ export const TopicsSelecter: React.FC<Props> = ({ handleChange, label }) => {
           {...params}
           label={label || "Topics"}
           placeholder="Science"
-          sx={{ background: "#E8E8E8", borderRadius: 2 }}
+          sx={{ background: bgColor || "#E8E8E8", borderRadius: 2 }}
         />
       )}
       sx={{

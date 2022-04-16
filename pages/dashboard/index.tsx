@@ -36,7 +36,14 @@ const DashboardPage: NextPage = () => {
 
   return (
     <SideBar appBarChildren={appBarChildren}>
-      <Box sx={{ margin: "auto", maxWidth: 1300 }}>
+      <Box
+        sx={{
+          margin: "auto",
+          maxWidth: 1300,
+          paddinigX: "2rem",
+          boxSizing: "content-box",
+        }}
+      >
         {!hasCompletedOnBoarding && !loading && (
           <ClosableBox>
             <Typography variant="h5" fontWeight="500">

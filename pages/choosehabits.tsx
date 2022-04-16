@@ -90,7 +90,22 @@ const ChooseHabitsPage: NextPage = () => {
           Select Your Habits
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 3, width: 1050, minHeight: "50vh" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            rowGap: 3,
+            columnGap: 3,
+
+            padding: "1rem",
+            margin: "auto",
+            // marginTop: "1.5rem",
+            borderRadius: "1rem",
+            width: "100%",
+            minHeight: "50vh",
+            alignContent: "flex-start",
+          }}
+        >
           {error && "Error"}
           {loading &&
             [1, 2, 3].map((i) => (
