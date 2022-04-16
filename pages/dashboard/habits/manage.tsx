@@ -1,7 +1,9 @@
 import {
   Box,
+  Breadcrumbs,
   Button,
   CircularProgress,
+  Link,
   Skeleton,
   Typography,
 } from "@mui/material";
@@ -16,8 +18,12 @@ import { collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "config/firebase.config";
 import { habitInfoConverter } from "src/services/habits.service";
 import { useUserStore } from "src/client/store/user.store";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 const ManageHabitsPage: NextPage = () => {
+  const router = useRouter();
   const [userUid, userHabits] = useUserStore((state) => [
     state.uid,
     state.habits,
@@ -45,7 +51,8 @@ const ManageHabitsPage: NextPage = () => {
       habits: selectedHabits,
     })
       .then(() => {
-        console.log("Updated habits");
+        toast.success("Successsfully saved changes!");
+        router.push("/dashboard/habits");
       })
       .catch((err) => console.log(err))
       .finally(() => setSaving(false));
@@ -55,13 +62,25 @@ const ManageHabitsPage: NextPage = () => {
     setSelectedHabits(userHabits);
   }, [userHabits, userUid]);
 
+  const appBarChildren = (
+    <Breadcrumbs aria-label="breadcrumb">
+      <NextLink href="/dashboard/habits" passHref>
+        <Link underline="hover" color="inherit">
+          Habits
+        </Link>
+      </NextLink>
+
+      <Typography color="text.primary">Breadcrumbs</Typography>
+    </Breadcrumbs>
+  );
+
   return (
-    <SideBar>
+    <SideBar appBarChildren={appBarChildren}>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "85%",
+          maxWidth: 1300,
           margin: "auto",
         }}
       >
@@ -94,7 +113,9 @@ const ManageHabitsPage: NextPage = () => {
         <Box
           sx={{
             display: "flex",
-            gap: 3,
+            flexWrap: "wrap",
+            rowGap: 3,
+            columnGap: 3,
             backgroundColor: "white",
             padding: "2rem",
             margin: "auto",
@@ -102,6 +123,7 @@ const ManageHabitsPage: NextPage = () => {
             borderRadius: "1rem",
             width: "100%",
             minHeight: "50vh",
+            alignContent: "flex-start",
           }}
         >
           {loading &&

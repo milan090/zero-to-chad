@@ -23,7 +23,7 @@ const MyPostsPage: NextPage = () => {
 
   return (
     <SideBar appBarChildren={appBarChildren}>
-      <Box>
+      <Box sx={{ maxWidth: 1300, margin: "auto" }}>
         <Typography variant="h5" fontWeight="600" sx={{ paddingBottom: 2 }}>
           Your Collections
         </Typography>

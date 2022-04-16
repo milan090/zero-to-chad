@@ -21,6 +21,15 @@ const login = async (email: string, password: string) => {
   } catch (err) {
     const error = err as { code: string };
     console.log(error.code);
+    if (
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/user-not-found"
+    ) {
+      throw {
+        type: "password",
+        message: "Invalid email and password combination",
+      };
+    }
   }
 };
 
@@ -29,9 +38,20 @@ const LoginPage: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = ({ email, password }) =>
-    login(email, password);
+  const onSubmit: SubmitHandler<Inputs> = ({ email, password }) => {
+    login(email, password)
+      .then(() => {
+        Router.push("/dashboard");
+      })
+      .catch((err) => {
+        const error = err as { type: string; message: string };
+        if (error.type === "password") {
+          setError("password", { message: error.message });
+        }
+      });
+  };
   const [user] = useAuthState(auth);
 
   useEffect(() => {

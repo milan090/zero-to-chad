@@ -19,6 +19,8 @@ import MyPostsIcon from "public/images/dashboard/fa-solid_pen.svg";
 import { useRouter } from "next/router";
 import { DashboardProfileDropdown } from "../components/DashboardProfileDropdown.component";
 import Link from "next/link";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "config/firebase.config";
 
 const drawerWidth = 240;
 
@@ -56,10 +58,17 @@ interface Props {
 export const SideBar: React.FC<Props> = ({ children, appBarChildren }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const router = useRouter();
+  const [user, loading] = useAuthState(auth);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  React.useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading]);
 
   const drawer = (
     <Box>
@@ -108,9 +117,19 @@ export const SideBar: React.FC<Props> = ({ children, appBarChildren }) => {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           pt: "1rem",
+          paddingX: "2rem",
+          // display: "flex",
+          // justifyContent: "center",
         }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{
+            width: "100%",
+            maxWidth: 1300,
+            margin: "auto",
+            padding: "0 !important",
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -170,7 +189,7 @@ export const SideBar: React.FC<Props> = ({ children, appBarChildren }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          paddingTop: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >

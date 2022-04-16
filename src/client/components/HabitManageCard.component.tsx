@@ -55,18 +55,16 @@ export const HabitManageCard: React.FC<Props> = ({
             {description}
           </Typography>
           <Checkbox
-            icon={<CircleUnchecked />}
+            icon={<CircleUnchecked sx={{ width: 18 }} />}
             checkedIcon={
               <CircleChecked
-                style={
-                  {
-                    // color: "#4CA4FD",
-                  }
-                }
+                style={{
+                  width: 18,
+                }}
                 color="info"
               />
             }
-            style={{ position: "absolute", top: "0.5rem", right: "0.5rem" }}
+            style={{ position: "absolute", top: "0", right: "0" }}
             checked={checked}
           />
         </CardContent>
