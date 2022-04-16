@@ -14,12 +14,13 @@ import { NextPage } from "next";
 import { SideBar } from "src/client/layouts/SideBar.layout";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import { ChangeEvent, useState } from "react";
-import { createRegularPost, RegularPostData } from "src/services/post.service";
+import { createPost } from "src/services/post.service";
 import { useUserStore } from "src/client/store/user.store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
+import { RegularPostInputs } from "src/types/post.types";
 
 const collections = ["None", "Rick Astley", "Rick and Morty"];
 
@@ -51,7 +52,7 @@ const CreateRegularPostPage: NextPage = () => {
   };
 
   const handlePost: SubmitHandler<Inputs> = ({ title, content }) => {
-    const data: RegularPostData = {
+    const data: RegularPostInputs = {
       type: "regular",
       title: title,
       content: content,
@@ -61,7 +62,7 @@ const CreateRegularPostPage: NextPage = () => {
       collectionId: collection,
     };
     console.log(data);
-    const post = createRegularPost(data)
+    const post = createPost(data)
       .then((id) => {
         console.log(id);
         router.push("/dashboard/my-posts");
@@ -156,7 +157,7 @@ const CreateRegularPostPage: NextPage = () => {
               }}
               {...register("content", {
                 minLength: {
-                  value: 50,
+                  value: 100,
                   message: "Content should be atleast 50 characters long",
                 },
                 maxLength: {

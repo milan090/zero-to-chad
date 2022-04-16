@@ -14,12 +14,13 @@ import { NextPage } from "next";
 import { SideBar } from "src/client/layouts/SideBar.layout";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import { ChangeEvent, useState } from "react";
-import { createRegularPost, QuotePostData } from "src/services/post.service";
+import { createPost } from "src/services/post.service";
 import { useUserStore } from "src/client/store/user.store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
+import { QuotePostInputs } from "src/types/post.types";
 
 const collections = ["None", "Rick Astley", "Rick and Morty"];
 
@@ -51,7 +52,7 @@ const CreateQuotePage: NextPage = () => {
   };
 
   const handlePost: SubmitHandler<Inputs> = ({ author, content }) => {
-    const data: QuotePostData = {
+    const data: QuotePostInputs = {
       type: "quote",
       author,
       content,
@@ -61,7 +62,7 @@ const CreateQuotePage: NextPage = () => {
       collectionId: collection,
     };
     console.log(data);
-    const post = createRegularPost(data)
+    const post = createPost(data)
       .then((id) => {
         console.log(id);
         router.push("/dashboard/my-posts");
