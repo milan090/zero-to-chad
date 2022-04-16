@@ -1,10 +1,14 @@
 import { db, storage } from "config/firebase.config";
 import {
+  collection,
   doc,
   FirestoreDataConverter,
+  getDocs,
+  query,
   QueryDocumentSnapshot,
   setDoc,
   SnapshotOptions,
+  where,
 } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { generate } from "short-uuid";
@@ -57,7 +61,7 @@ export const createCollection = async ({
   }
 };
 
-export const collectionConverter: FirestoreDataConverter<CollectionDataDoc> = {
+export const collectionConverter: FirestoreDataConverter<CollectionData> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   toFirestore({ id, ...post }: CollectionData): CollectionDataDoc {
     return post;
@@ -72,4 +76,17 @@ export const collectionConverter: FirestoreDataConverter<CollectionDataDoc> = {
       id: snapshot.id,
     };
   },
+};
+
+export const fetchUserCollections = async (
+  userUid: string
+): Promise<CollectionData[]> => {
+  const { docs } = await getDocs(
+    query<CollectionData>(
+      collection(db, "collection").withConverter(collectionConverter),
+      where("authorUid", "==", userUid)
+    )
+  );
+
+  return docs.map((doc) => doc.data());
 };
