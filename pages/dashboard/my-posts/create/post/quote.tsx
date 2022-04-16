@@ -1,8 +1,10 @@
 import {
   Box,
+  Breadcrumbs,
   Button,
   FormControl,
   InputLabel,
+  Link,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -17,6 +19,7 @@ import { useUserStore } from "src/client/store/user.store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import NextLink from "next/link";
 
 const collections = ["None", "Rick Astley", "Rick and Morty"];
 
@@ -71,12 +74,38 @@ const CreateQuotePage: NextPage = () => {
     });
   };
 
+  const appBarChildren = (
+    <Breadcrumbs aria-label="breadcrumb">
+      <NextLink href="/dashboard/my-posts" passHref>
+        <Link underline="hover" color="inherit">
+          My Posts
+        </Link>
+      </NextLink>
+      <NextLink href="/dashboard/my-posts/create" passHref>
+        <Link underline="hover" color="inherit">
+          Create
+        </Link>
+      </NextLink>
+      <NextLink href="/dashboard/my-posts/create/post" passHref>
+        <Link underline="hover" color="inherit">
+          Post
+        </Link>
+      </NextLink>
+
+      <Typography color="text.primary">Quote</Typography>
+    </Breadcrumbs>
+  );
+
   return (
-    <SideBar>
+    <SideBar appBarChildren={appBarChildren}>
       <form
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
+          margin: "auto",
+          maxWidth: 1364,
+          padding: "0 2rem",
+          marginTop: "2rem",
         }}
         onSubmit={handleSubmit(handlePost)}
       >
@@ -161,7 +190,7 @@ const CreateQuotePage: NextPage = () => {
                 sx={{ width: "100%" }}
                 component="span"
               >
-                {thumpnail?.name || "Upload Image"}
+                {thumpnail?.name || "Upload Image (of Author)"}
               </Button>
             </label>
             <br />

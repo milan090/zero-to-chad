@@ -70,7 +70,7 @@ const ManageHabitsPage: NextPage = () => {
         </Link>
       </NextLink>
 
-      <Typography color="text.primary">Breadcrumbs</Typography>
+      <Typography color="text.primary">Manage</Typography>
     </Breadcrumbs>
   );
 
@@ -82,6 +82,7 @@ const ManageHabitsPage: NextPage = () => {
           flexDirection: "column",
           maxWidth: 1300,
           margin: "auto",
+          marginTop: "2rem",
         }}
       >
         <Box

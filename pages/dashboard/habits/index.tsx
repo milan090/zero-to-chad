@@ -7,7 +7,7 @@ import { SideBar } from "src/client/layouts/SideBar.layout";
 const HabitsPage: NextPage = () => {
   return (
     <SideBar>
-      <Box sx={{ maxWidth: 1300, margin: "auto" }}>
+      <Box sx={{ maxWidth: 1300, margin: "auto", marginTop: "2rem" }}>
         <Box
           sx={{
             display: "flex",

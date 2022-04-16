@@ -1,13 +1,37 @@
 import { NextPage } from "next";
-import { Box, Button, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Breadcrumbs,
+  Button,
+  Link,
+  Paper,
+  Typography,
+} from "@mui/material";
 import DocumentIcon from "public/images/dashboard/carbon_document.svg";
 import QuotesIcon from "public/images/dashboard/bi_quote.svg";
 import { SideBar } from "src/client/layouts/SideBar.layout";
-import Link from "next/link";
+import NextLink from "next/link";
 
 const CreateRegularPostPage: NextPage = () => {
+  const appBarChildren = (
+    <Breadcrumbs aria-label="breadcrumb">
+      <NextLink href="/dashboard/my-posts" passHref>
+        <Link underline="hover" color="inherit">
+          My Posts
+        </Link>
+      </NextLink>
+      <NextLink href="/dashboard/my-posts/create" passHref>
+        <Link underline="hover" color="inherit">
+          Create
+        </Link>
+      </NextLink>
+
+      <Typography color="text.primary">Post</Typography>
+    </Breadcrumbs>
+  );
+
   return (
-    <SideBar>
+    <SideBar appBarChildren={appBarChildren}>
       <Box
         sx={{
           display: "flex",
@@ -43,7 +67,7 @@ const CreateRegularPostPage: NextPage = () => {
             Lorem ipsum some stuff like that goes here lorem ipsum okay, I am
             too lazy to find lorem ipsum so ill just type some shitz here
           </Typography>
-          <Link href="/dashboard/my-posts/create/post/regular" passHref>
+          <NextLink href="/dashboard/my-posts/create/post/regular" passHref>
             <Button
               variant="contained"
               color="info"
@@ -51,7 +75,7 @@ const CreateRegularPostPage: NextPage = () => {
             >
               Create
             </Button>
-          </Link>
+          </NextLink>
         </Paper>
 
         <Paper
@@ -79,7 +103,7 @@ const CreateRegularPostPage: NextPage = () => {
             Lorem ipsum some stuff like that goes here lorem ipsum okay, I am
             too lazy to find lorem ipsum so ill just type some shitz here
           </Typography>
-          <Link href="/dashboard/my-posts/create/post/quote" passHref>
+          <NextLink href="/dashboard/my-posts/create/post/quote" passHref>
             <Button
               variant="contained"
               color="info"
@@ -87,7 +111,7 @@ const CreateRegularPostPage: NextPage = () => {
             >
               Create
             </Button>
-          </Link>
+          </NextLink>
         </Paper>
       </Box>
     </SideBar>
