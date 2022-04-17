@@ -61,7 +61,7 @@ export const createPost = async ({ image, ...data }: PostInputs) => {
   }
 };
 
-export const regularPosetConverter: FirestoreDataConverter<RegularPost> = {
+export const regularPostConverter: FirestoreDataConverter<RegularPost> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   toFirestore({ id, ...post }: RegularPost): RegularPostDoc {
     return post;
@@ -78,7 +78,7 @@ export const regularPosetConverter: FirestoreDataConverter<RegularPost> = {
   },
 };
 
-export const quotePosetConverter: FirestoreDataConverter<QuotePost> = {
+export const quotePostConverter: FirestoreDataConverter<QuotePost> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   toFirestore({ id, ...post }: QuotePost): QuotePostDoc {
     return post;
@@ -99,7 +99,7 @@ export const fetchUserPosts = async (
   userUid: string
 ): Promise<{ regularPosts: RegularPost[]; quotePosts: QuotePost[] }> => {
   const regularRef = query<RegularPost>(
-    collection(db, "posts").withConverter(regularPosetConverter),
+    collection(db, "posts").withConverter(regularPostConverter),
     where("authorUid", "==", userUid),
     where("type", "==", "regular")
   );
@@ -108,7 +108,7 @@ export const fetchUserPosts = async (
   const regularPosts = regularSnapshot.docs.map((doc) => doc.data());
 
   const quoteRef = query<QuotePost>(
-    collection(db, "posts").withConverter(quotePosetConverter),
+    collection(db, "posts").withConverter(quotePostConverter),
     where("authorUid", "==", userUid),
     where("type", "==", "quote")
   );

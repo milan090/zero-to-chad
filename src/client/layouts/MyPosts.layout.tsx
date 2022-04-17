@@ -1,107 +1,11 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Grid,
-  Skeleton,
-  Typography,
-} from "@mui/material";
-import Image from "next/image";
+import { Grid, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
-
 import { fetchUserPosts } from "src/services/post.service";
 import { QuotePost, RegularPost } from "src/types/post.types";
 import { useUserStore } from "../store/user.store";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-const MyRegularPostCard: React.FC<RegularPost> = ({
-  title,
-  content,
-  imageUrl,
-}) => {
-  return (
-    <Card
-      sx={{
-        borderRadius: "0.5rem",
-        flexGrow: 2,
-        boxShadow: "0px 5px 18px rgba(247, 147, 34, 0.32)",
-      }}
-    >
-      <CardContent sx={{ padding: 0 }}>
-        {imageUrl && (
-          <Box sx={{ height: 200, position: "relative", width: "100%" }}>
-            <Image src={imageUrl} alt={title} layout="fill" objectFit="cover" />
-          </Box>
-        )}
-
-        <Box sx={{ padding: "1rem" }}>
-          <Typography fontWeight="600">{title}</Typography>
-          <Typography paragraph sx={{ paddingTop: 1 }}>
-            {content}
-          </Typography>
-        </Box>
-      </CardContent>
-    </Card>
-  );
-};
-
-const MyQuotePostCard: React.FC<QuotePost> = ({
-  author,
-  imageUrl,
-  content,
-}) => {
-  return (
-    <Card
-      sx={{
-        display: "flex",
-        position: "relative",
-        borderRadius: "0.5rem",
-        boxShadow: "0px 5px 18px rgba(247, 147, 34, 0.32)",
-      }}
-    >
-      <CardContent sx={{ display: "flex", width: "100%" }}>
-        {imageUrl ? (
-          <Box
-            sx={{
-              height: "120px",
-              width: "100%",
-              maxWidth: 120,
-              position: "relative",
-            }}
-          >
-            <Image
-              src={imageUrl}
-              alt={author}
-              style={{ borderRadius: "50%" }}
-              layout="fill"
-              objectFit="cover"
-            />
-          </Box>
-        ) : (
-          <AccountCircleIcon width={120} height={120} />
-        )}
-
-        <Box
-          sx={{
-            textAlign: "center",
-            float: "right",
-            marginTop: "1rem",
-            flexGrow: 1,
-            paddingX: "1rem",
-          }}
-        >
-          <Typography fontWeight="400" fontStyle="italic">
-            {" "}
-            “{content}”{" "}
-          </Typography>
-          <Typography fontWeight="600" variant="h5" sx={{ marginTop: 1 }}>
-            {author}
-          </Typography>
-        </Box>
-      </CardContent>
-    </Card>
-  );
-};
+import { MyRegularPostCard } from "../components/RegularPostCard.component";
+import { MyQuotePostCard } from "../components/QuotePostCard.component";
 
 export const MyPosts: React.FC = () => {
   const [userUid] = useUserStore(({ uid }) => [uid]);

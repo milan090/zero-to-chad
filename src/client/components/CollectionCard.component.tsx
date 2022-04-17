@@ -1,5 +1,6 @@
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 import { HeartIcon, ViewsIcon } from "src/icons";
 import { CollectionData } from "src/types/collection.types";
 
@@ -9,6 +10,7 @@ export const CollectionCard: React.FC<CollectionData> = ({
   views,
   likes,
   description,
+  id,
 }) => {
   return (
     <Box display="flex">
@@ -50,19 +52,21 @@ export const CollectionCard: React.FC<CollectionData> = ({
               </Typography>
             </Box>
 
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#79766E",
-                color: "#FFFFFF",
-                width: 72,
-                height: 36,
-                borderRadius: 2,
-                marginTop: "auto",
-              }}
-            >
-              View
-            </Button>
+            <Link href={`/dashboard/explore/collection/${id}`} passHref>
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "#79766E",
+                  color: "#FFFFFF",
+                  width: 72,
+                  height: 36,
+                  borderRadius: 2,
+                  marginTop: "auto",
+                }}
+              >
+                View
+              </Button>
+            </Link>
           </Box>
         </CardContent>
       </Card>
