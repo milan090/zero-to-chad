@@ -13,7 +13,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <NextSeo title="Home" description="A short description goes here." />
+      <NextSeo title="Home" />
 
       <Box
         sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
