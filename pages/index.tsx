@@ -59,16 +59,35 @@ const Home: NextPage = () => {
         </Box>
         <Box
           sx={{
-            marginTop: "auto",
-            marginBottom: "5rem",
+            margin: "auto",
             display: "flex",
-            marginLeft: "2rem",
+            flexDirection: "column",
+            paddingTop: "5rem",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Typography variant="h2" fontWeight="500">
-            1% Better A Day <br /> Equals 37x
-            <br /> Better You In A Year
+          <Typography
+            variant="h1"
+            fontWeight="600"
+            sx={{ color: "white", textAlign: "center" }}
+          >
+            1% Better A Day Equals <br /> 37x Better You In A Year!
           </Typography>
+          <Typography textAlign="center">
+            Your personal all-in-one self improvement app
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              fontSize: "1.2rem",
+              marginTop: "1rem",
+              borderRadius: "5rem",
+              padding: "0.5rem 2rem",
+            }}
+          >
+            Take Action Now!
+          </Button>
         </Box>
       </Box>
     </div>

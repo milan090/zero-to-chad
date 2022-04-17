@@ -13,9 +13,7 @@ import { lightThemeOptions } from "../styles/theme/lightThemeOptions";
 import "../styles/globals.css";
 import { DefaultSeo } from "next-seo";
 import { Toaster } from "react-hot-toast";
-
-// import your default seo configuration
-import { SEO } from "../config/seo.config";
+import { SEO } from "config/seo.config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "config/firebase.config";
 import { useUserStore } from "src/client/store/user.store";
@@ -75,7 +73,37 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
 
   return (
     <>
-      <DefaultSeo {...SEO} />
+      <DefaultSeo
+        title={pageProps?.seo?.title || SEO.DEFAULT_TITLE}
+        titleTemplate={SEO.DEFAULT_TITLE_TEMPLATE}
+        description={SEO.DEFAULT_DESCRIPTION}
+        // canonical={url}
+        openGraph={{
+          type: "website",
+          locale: "en_US",
+          // url,
+          site_name: SEO.SITE_NAME,
+          title: SEO.SITE_NAME,
+          description: SEO.DEFAULT_DESCRIPTION,
+          images: [
+            {
+              url: SEO.DEFAULT_OG_IMAGE,
+              alt: SEO.SITE_NAME,
+            },
+          ],
+        }}
+        twitter={{
+          handle: SEO.TWITTER_HANDLE,
+          site: SEO.TWITTER_HANDLE,
+          cardType: "summary_large_image",
+        }}
+        additionalLinkTags={[
+          {
+            rel: "shortcut icon",
+            href: SEO.FAVICON_LINK,
+          },
+        ]}
+      />
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={lightTheme}>
           <CssBaseline />
