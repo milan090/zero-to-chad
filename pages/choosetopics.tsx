@@ -8,7 +8,7 @@ import { db } from "config/firebase.config";
 import { useUserStore } from "src/client/store/user.store";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { TopicsSelecter } from "src/client/components/TopicsSelecter.component";
+import { TopicsSelector } from "src/client/components/TopicsSelector.component";
 
 const ChooseTopicsPage: NextPage = () => {
   const router = useRouter();
@@ -62,7 +62,7 @@ const ChooseTopicsPage: NextPage = () => {
         <Typography variant="h4" fontWeight="600" textAlign="center">
           Select The Topics That Interest You
         </Typography>
-        <TopicsSelecter
+        <TopicsSelector
           handleChange={(topics) =>
             setselectedTopics(topics.map((topic) => topic.id))
           }

@@ -11,7 +11,7 @@ type Props = {
   bgColor?: string;
 };
 
-export const TopicsSelecter: React.FC<Props> = ({
+export const TopicsSelector: React.FC<Props> = ({
   handleChange,
   label,
   bgColor,

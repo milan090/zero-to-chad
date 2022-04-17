@@ -8,6 +8,7 @@ export const CollectionCard: React.FC<CollectionData> = ({
   name,
   views,
   likes,
+  description,
 }) => {
   return (
     <Box display="flex">
@@ -33,7 +34,8 @@ export const CollectionCard: React.FC<CollectionData> = ({
             flex: 1,
           }}
         >
-          <Typography fontWeight="600">Stress Management for Noobs</Typography>
+          <Typography fontWeight="600">{name}</Typography>
+          <Typography color="GrayText">{description.slice(0, 75)}</Typography>
           <Box
             display="flex"
             justifyContent="space-between"

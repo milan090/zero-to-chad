@@ -90,3 +90,16 @@ export const fetchUserCollections = async (
 
   return docs.map((doc) => doc.data());
 };
+
+export const fetchCollections = async (
+  topics: string[]
+): Promise<CollectionData[]> => {
+  const { docs } = await getDocs(
+    query<CollectionData>(
+      collection(db, "collection").withConverter(collectionConverter),
+      where("tags", "array-contains-any", topics)
+    )
+  );
+
+  return docs.map((doc) => doc.data());
+};

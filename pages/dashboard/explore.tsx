@@ -1,22 +1,20 @@
 import {
   alpha,
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardActionArea,
   Typography,
   Stack,
 } from "@mui/material";
 import { NextPage } from "next";
+import { ExploreCollections } from "src/client/layouts/ExploreCollections.layout";
 import { SideBar } from "src/client/layouts/SideBar.layout";
 import {
   AuthorIcon,
   HeartIcon,
   ViewsIcon,
   ShareIcon,
-  Rectangle1,
   Rectangle3,
   Rectangle4,
   Rectangle5,
@@ -28,7 +26,14 @@ const ExplorePage: NextPage = () => {
   return (
     <SideBar>
       <Box>
-        <Box sx={{ maxWidth: 1300, margin: "auto" }}>
+        <Box
+          sx={{
+            maxWidth: 1300,
+            margin: "auto",
+            paddingX: "2rem",
+            boxSizing: "content-box",
+          }}
+        >
           <Typography variant="h4" fontWeight="600" sx={{ paddingTop: 3 }}>
             You were reading
           </Typography>
@@ -58,50 +63,14 @@ const ExplorePage: NextPage = () => {
             </CardActionArea>
           </Card>
 
-          <Typography variant="h4" fontWeight="600" sx={{ marginTop: 5 }}>
+          <Typography
+            variant="h4"
+            fontWeight="600"
+            sx={{ marginTop: 5, marginBottom: 2 }}
+          >
             You might like these Collections
           </Typography>
-          <Card sx={{ width: 256, height: 350, borderRadius: 4, marginTop: 3 }}>
-            <Rectangle1 />
-            <CardContent>
-              <Typography fontWeight="600">
-                Stress Management for Noobs
-              </Typography>
-              <Typography fontWeight="400" sx={{ color: "#79766E" }}>
-                @milan090
-              </Typography>
-              <Typography fontWeight="400" sx={{ color: "#79766E" }}>
-                5 Posts
-              </Typography>
-            </CardContent>
-            <CardContent>
-              <Box sx={{ position: "relative", marginTop: 1 }}>
-                <Typography>
-                  <ViewsIcon /> 11,352
-                </Typography>
-                <Typography>
-                  <HeartIcon /> 6,781
-                </Typography>
-                <CardActions disableSpacing>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      bgcolor: "#79766E",
-                      color: "#FFFFFF",
-                      width: 72,
-                      height: 36,
-                      borderRadius: 2,
-                      position: "relative",
-                      left: 135,
-                      bottom: 50,
-                    }}
-                  >
-                    View
-                  </Button>
-                </CardActions>
-              </Box>
-            </CardContent>
-          </Card>
+          <ExploreCollections />
         </Box>
 
         <Box

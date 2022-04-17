@@ -16,7 +16,7 @@ import { ChangeEvent, useState } from "react";
 import { CollectionDataInput } from "src/types/collection.types";
 import { useUserStore } from "src/client/store/user.store";
 import { useRouter } from "next/router";
-import { TopicsSelecter } from "src/client/components/TopicsSelecter.component";
+import { TopicsSelector } from "src/client/components/TopicsSelector.component";
 import { Topic } from "src/types/topic.types";
 import { createCollection } from "src/services/collection.service";
 import toast from "react-hot-toast";
@@ -153,7 +153,7 @@ const CreateCollectionPage: NextPage = () => {
             <Typography color="error" variant="caption">
               {errors.description?.message}
             </Typography>
-            <TopicsSelecter
+            <TopicsSelector
               handleChange={handleSelectedTopicsChange}
               label="Tags"
             />
