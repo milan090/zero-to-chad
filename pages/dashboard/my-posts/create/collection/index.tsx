@@ -6,11 +6,11 @@ import {
   CardContent,
   Typography,
   Button,
+  Breadcrumbs,
+  Link,
 } from "@mui/material";
 import { SideBar } from "src/client/layouts/SideBar.layout";
-//import { storage } from "firebase/storage";
-import ChevronLeftIcon from "public/images/dashboard/akar-icons_chevron-left.svg";
-
+import NextLink from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ChangeEvent, useState } from "react";
 import { CollectionDataInput } from "src/types/collection.types";
@@ -34,11 +34,11 @@ const CreateCollectionPage: NextPage = () => {
   } = useForm<Inputs>();
   const [thumpnail, setThumpnail] = useState<null | File>(null);
   const user = useUserStore(({ uid, username }) => ({ uid, username }));
-  const [selectedTopics, setselectedTopics] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const router = useRouter();
 
-  const handleSelectedTopicsChange = (topics: Topic[]) => {
-    setselectedTopics(topics.map((topic) => topic.id));
+  const handleTagsChange = (topics: Topic[]) => {
+    setTags(topics.map((topic) => topic.id));
   };
 
   const onThumbnailChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +50,11 @@ const CreateCollectionPage: NextPage = () => {
   };
 
   const handleCreate: SubmitHandler<Inputs> = ({ name, description }) => {
+    if (tags.length === 0) {
+      return toast.error("Select atleast one tag");
+    } else if (tags.length > 3) {
+      return toast.error("You can select only 3 tags at maximum");
+    }
     const data: CollectionDataInput = {
       name,
       description,
@@ -57,7 +62,7 @@ const CreateCollectionPage: NextPage = () => {
       authorUid: user.uid,
       authorUsername: user.username,
       posts: [],
-      tags: selectedTopics,
+      tags,
     };
     console.log(data);
     const collection = createCollection(data)
@@ -74,16 +79,20 @@ const CreateCollectionPage: NextPage = () => {
   };
 
   const appBarChildren = (
-    <Box sx={{ display: "flex" }}>
-      <ChevronLeftIcon />
-      <Typography
-        fontWeight="500"
-        color="#79766E"
-        sx={{ marginLeft: 1, marginTop: 0.2 }}
-      >
-        Posts/Create/Post/Collection
-      </Typography>
-    </Box>
+    <Breadcrumbs aria-label="breadcrumb">
+      <NextLink href="/dashboard/my-posts" passHref>
+        <Link underline="hover" color="inherit">
+          My Posts
+        </Link>
+      </NextLink>
+      <NextLink href="/dashboard/my-posts/create" passHref>
+        <Link underline="hover" color="inherit">
+          Create
+        </Link>
+      </NextLink>
+
+      <Typography color="text.primary">Collection</Typography>
+    </Breadcrumbs>
   );
 
   return (
@@ -153,10 +162,7 @@ const CreateCollectionPage: NextPage = () => {
             <Typography color="error" variant="caption">
               {errors.description?.message}
             </Typography>
-            <TopicsSelector
-              handleChange={handleSelectedTopicsChange}
-              label="Tags"
-            />
+            <TopicsSelector handleChange={handleTagsChange} label="Tags" />
           </Box>
 
           <Card

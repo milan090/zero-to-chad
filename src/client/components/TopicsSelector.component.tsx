@@ -32,7 +32,7 @@ export const TopicsSelector: React.FC<Props> = ({
       id="multiple-limit-tags"
       options={topics}
       getOptionLabel={(option) => option.name}
-      onChange={(e, value) => handleChange(value as Topic[])}
+      onChange={(e, value) => handleChange(value || [])}
       renderInput={(params) => (
         <TextField
           {...params}

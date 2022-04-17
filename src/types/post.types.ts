@@ -1,11 +1,16 @@
-export interface RegularPostInputs {
+interface CommonPostInputs {
+  content: string;
+  image: File | null;
+  collectionId: string | null;
+  authorUid: string;
+  authorUsername: string;
+  tags: string[];
+}
+
+export interface RegularPostInputs extends CommonPostInputs {
   type: "regular";
   title: string;
   content: string;
-  image: File | null;
-  collectionId?: string;
-  authorUid: string;
-  authorUsername: string;
 }
 
 export interface RegularPostDoc extends Omit<RegularPostInputs, "image"> {
@@ -21,14 +26,10 @@ export interface RegularPost extends RegularPostDoc {
 //
 // Quotes Posts
 //
-export interface QuotePostInputs {
+export interface QuotePostInputs extends CommonPostInputs {
   type: "quote";
   author: string;
   content: string;
-  image: File | null;
-  collectionId?: string;
-  authorUid: string;
-  authorUsername: string;
 }
 
 export interface QuotePostDoc extends Omit<QuotePostInputs, "image"> {

@@ -1,15 +1,4 @@
-import {
-  Box,
-  Breadcrumbs,
-  Button,
-  FormControl,
-  InputLabel,
-  Link,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Typography,
-} from "@mui/material";
+import { Box, Breadcrumbs, Button, Link, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { SideBar } from "src/client/layouts/SideBar.layout";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
@@ -21,8 +10,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
 import { RegularPostInputs } from "src/types/post.types";
-
-const collections = ["None", "Rick Astley", "Rick and Morty"];
+import { CollectionSelector } from "src/client/components/CollectionSelector.component";
+import { TopicsSelector } from "src/client/components/TopicsSelector.component";
 
 type Inputs = {
   title: string;
@@ -38,9 +27,10 @@ const CreateRegularPostPage: NextPage = () => {
   const user = useUserStore(({ uid, username }) => ({ uid, username }));
   const router = useRouter();
 
-  const [collection, setCollection] = useState("");
-  const handleCollectionChange = (event: SelectChangeEvent<string>) =>
-    setCollection(event.target.value === "None" ? "" : event.target.value);
+  const [tags, setTags] = useState<string[]>([]);
+
+  const [collection, setCollection] = useState<null | string>(null);
+  const handleCollectionChange = (value: string | null) => setCollection(value);
 
   const [thumpnail, setThumpnail] = useState<null | File>(null);
 
@@ -52,6 +42,11 @@ const CreateRegularPostPage: NextPage = () => {
   };
 
   const handlePost: SubmitHandler<Inputs> = ({ title, content }) => {
+    if (tags.length === 0) {
+      return toast.error("Select atleast one tag");
+    } else if (tags.length > 3) {
+      return toast.error("You can select only 3 tags at maximum");
+    }
     const data: RegularPostInputs = {
       type: "regular",
       title: title,
@@ -60,6 +55,7 @@ const CreateRegularPostPage: NextPage = () => {
       authorUsername: user.username,
       image: thumpnail || null,
       collectionId: collection,
+      tags,
     };
     console.log(data);
     const post = createPost(data)
@@ -169,6 +165,10 @@ const CreateRegularPostPage: NextPage = () => {
             <Typography color="error" variant="caption">
               {errors.content?.message}
             </Typography>
+            <TopicsSelector
+              label="Tags"
+              handleChange={(newTags) => setTags(newTags.map((tag) => tag.id))}
+            />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -189,10 +189,13 @@ const CreateRegularPostPage: NextPage = () => {
                 variant="contained"
                 color="primary"
                 endIcon={<AddPhotoAlternateOutlinedIcon />}
-                sx={{ width: "100%" }}
+                sx={{ width: "15rem" }}
                 component="span"
               >
-                {thumpnail?.name || "Upload Image"}
+                {thumpnail
+                  ? thumpnail.name.slice(0, 25) +
+                    (thumpnail?.name.length > 25 ? "..." : "")
+                  : "Upload Image"}
               </Button>
             </label>
             <br />
@@ -204,44 +207,7 @@ const CreateRegularPostPage: NextPage = () => {
               Optional
             </Typography>
           </Box>
-          <FormControl fullWidth sx={{ width: "15rem" }}>
-            <InputLabel
-              id="demo-simple-select-label"
-              sx={{
-                // color: "grey !important",
-                backgroundColor: "background.default",
-
-                "&.MuiInputLabel-shrink": {
-                  color: "grey",
-
-                  "&.Mui-focused": {
-                    color: "black",
-                  },
-                },
-              }}
-            >
-              Collection
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={collection}
-              label="Age"
-              onChange={handleCollectionChange}
-              sx={{
-                width: "100%",
-                "	&.MuiOutlinedInput-notchedOutline": {
-                  color: "black",
-                },
-              }}
-            >
-              {collections.map((collection) => (
-                <MenuItem value={collection} key={collection}>
-                  {collection}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <CollectionSelector handleChange={handleCollectionChange} />
           <Button
             type="submit"
             variant="contained"

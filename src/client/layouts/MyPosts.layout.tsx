@@ -29,7 +29,7 @@ const MyRegularPostCard: React.FC<RegularPost> = ({
     >
       <CardContent sx={{ padding: 0 }}>
         {imageUrl && (
-          <Box sx={{ height: 130, position: "relative", width: "100%" }}>
+          <Box sx={{ height: 200, position: "relative", width: "100%" }}>
             <Image src={imageUrl} alt={title} layout="fill" objectFit="cover" />
           </Box>
         )}
@@ -59,15 +59,24 @@ const MyQuotePostCard: React.FC<QuotePost> = ({
         boxShadow: "0px 5px 18px rgba(247, 147, 34, 0.32)",
       }}
     >
-      <CardContent sx={{ display: "flex" }}>
+      <CardContent sx={{ display: "flex", width: "100%" }}>
         {imageUrl ? (
-          <Image
-            src={imageUrl}
-            width={120}
-            height={120}
-            alt={author}
-            style={{ borderRadius: "50%" }}
-          />
+          <Box
+            sx={{
+              height: "120px",
+              width: "100%",
+              maxWidth: 120,
+              position: "relative",
+            }}
+          >
+            <Image
+              src={imageUrl}
+              alt={author}
+              style={{ borderRadius: "50%" }}
+              layout="fill"
+              objectFit="cover"
+            />
+          </Box>
         ) : (
           <AccountCircleIcon width={120} height={120} />
         )}
@@ -76,16 +85,16 @@ const MyQuotePostCard: React.FC<QuotePost> = ({
           sx={{
             textAlign: "center",
             float: "right",
-            width: 250,
-            marginLeft: 5,
-            marginTop: 1,
+            marginTop: "1rem",
+            flexGrow: 1,
+            paddingX: "1rem",
           }}
         >
           <Typography fontWeight="400" fontStyle="italic">
             {" "}
             “{content}”{" "}
           </Typography>
-          <Typography fontWeight="600" sx={{ marginTop: 1 }}>
+          <Typography fontWeight="600" variant="h5" sx={{ marginTop: 1 }}>
             {author}
           </Typography>
         </Box>
@@ -111,8 +120,16 @@ export const MyPosts: React.FC = () => {
   }, [userUid]);
 
   return (
-    <Grid container columnSpacing={5} sx={{ marginTop: "1rem" }}>
-      <Grid item xs={7} sx={{ display: "flex", flexDirection: "column" }}>
+    <Grid
+      container
+      columnSpacing={5}
+      sx={{ marginTop: "1rem", maxWidth: 1150 }}
+    >
+      <Grid
+        item
+        xs={6}
+        sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+      >
         {postsLoading && (
           <Skeleton
             variant="rectangular"
@@ -126,7 +143,11 @@ export const MyPosts: React.FC = () => {
             <MyRegularPostCard {...post} key={post.id} />
           ))}
       </Grid>
-      <Grid item xs={5}>
+      <Grid
+        item
+        xs={6}
+        sx={{ display: "flex", flexDirection: "column", gap: 5 }}
+      >
         {!postsLoading &&
           !!quotePosts &&
           quotePosts.map((post) => <MyQuotePostCard {...post} key={post.id} />)}
