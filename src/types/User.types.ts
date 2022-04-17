@@ -6,4 +6,5 @@ export interface UserDoc extends DocumentData {
   hasCompletedOnBoarding?: boolean;
   /** Topics that user is interested in */
   topics?: string[];
+  lastReadCollectionId?: string;
 }

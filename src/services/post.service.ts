@@ -19,6 +19,7 @@ import {
   QuotePost,
   QuotePostDoc,
   RegularPostDoc,
+  Post,
 } from "src/types/post.types";
 import { createPersistentDownloadUrl } from "./helpers";
 
@@ -87,6 +88,23 @@ export const quotePostConverter: FirestoreDataConverter<QuotePost> = {
     snapshot: QueryDocumentSnapshot<QuotePostDoc>,
     options: SnapshotOptions
   ): QuotePost {
+    const data = snapshot.data(options);
+    return {
+      ...data,
+      id: snapshot.id,
+    };
+  },
+};
+
+export const postConverter: FirestoreDataConverter<Post> = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  toFirestore({ id, ...post }: Post): PostDoc {
+    return post;
+  },
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot<Post>,
+    options: SnapshotOptions
+  ): Post {
     const data = snapshot.data(options);
     return {
       ...data,

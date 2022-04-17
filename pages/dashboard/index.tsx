@@ -7,22 +7,28 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
+import { db } from "config/firebase.config";
+import { doc } from "firebase/firestore";
 import { NextPage } from "next";
 import Link from "next/link";
+import { useDocumentDataOnce } from "react-firebase-hooks/firestore";
 import { ClosableBox } from "src/client/components/ClosableBox.component";
 import { HabitsGrid } from "src/client/components/HabitsGrid.component";
 import { SideBar } from "src/client/layouts/SideBar.layout";
 import { useUserStore } from "src/client/store/user.store";
 import { Rectangle3, Ellipse2 } from "src/icons";
+import { collectionConverter } from "src/services/collection.service";
 
 const DashboardPage: NextPage = () => {
-  const [username, hasCompletedOnBoarding, loading] = useUserStore(
-    ({ username, hasCompletedOnBoarding, loading }) => [
-      username,
-      hasCompletedOnBoarding,
-      loading,
-    ]
-  );
+  const [username, hasCompletedOnBoarding, lastReadCollectionId, loading] =
+    useUserStore(
+      ({ username, hasCompletedOnBoarding, lastReadCollectionId, loading }) => [
+        username,
+        hasCompletedOnBoarding,
+        lastReadCollectionId,
+        loading,
+      ]
+    );
 
   const appBarChildren = (
     <Typography variant="h4" fontWeight="600" noWrap component="div">
@@ -72,43 +78,27 @@ const DashboardPage: NextPage = () => {
             </Box>
           </ClosableBox>
         )}
-        <Typography variant="h4" fontWeight="600" sx={{ paddingTop: 3 }}>
-          You were reading
-        </Typography>
-        <Card
-          sx={{
-            position: "relative",
-            width: 671,
-            height: 146,
-            marginTop: 3,
-            borderRadius: 4,
-          }}
-        >
-          <Box sx={{ display: "flex" }}>
-            <Rectangle3 />
-            <CardContent sx={{ right: 100, bottom: 50 }}>
-              <Typography variant="h6" fontWeight="600">
-                Investing In Crypto
-              </Typography>
-              <Typography paragraph sx={{ width: 477 }}>
-                Lorem ipsum some stuff like that goes here lorem ipsum okay, I
-                am too lazy to find lorem ipsum so ill just type some shitz here
-              </Typography>
-              <Button
-                sx={{
-                  width: 120,
-                  height: 31,
-                  float: "right",
-                  left: 10,
-                  marginTop: -1,
-                }}
-                variant="contained"
-              >
-                Continue...
-              </Button>
-            </CardContent>
+        {lastReadCollectionId ? (
+          <>
+            <Typography variant="h4" fontWeight="600" sx={{ paddingTop: 3 }}>
+              You were reading
+            </Typography>
+            <LastReadCollection id={lastReadCollectionId} />
+          </>
+        ) : (
+          <Box>
+            <Typography
+              variant="h5"
+              fontWeight="600"
+              sx={{ paddingTop: 3, marginBottom: "1rem" }}
+            >
+              You are not reading anything!
+            </Typography>
+            <Link href="/dashboard/explore" passHref>
+              <Button variant="contained">Start Reading Now!</Button>
+            </Link>
           </Box>
-        </Card>
+        )}
       </Box>
       <Box
         sx={{
@@ -200,6 +190,51 @@ const DashboardPage: NextPage = () => {
         </Box>
       </Box>
     </SideBar>
+  );
+};
+
+const LastReadCollection: React.FC<{ id: string }> = ({ id }) => {
+  const [collectionData, collectionLoading] = useDocumentDataOnce(
+    doc(db, "collection", id).withConverter(collectionConverter)
+  );
+
+  if (collectionLoading) {
+    return <Skeleton variant="rectangular" width="70%" height={80} />;
+  }
+  return (
+    <Card
+      sx={{
+        position: "relative",
+        width: 671,
+        height: 146,
+        marginTop: 3,
+        borderRadius: 4,
+      }}
+    >
+      <Box sx={{ display: "flex" }}>
+        <Rectangle3 />
+        <CardContent sx={{ right: 100, bottom: 50 }}>
+          <Typography variant="h6" fontWeight="600">
+            {collectionData?.name}
+          </Typography>
+          <Typography paragraph sx={{ width: 477 }}>
+            {collectionData?.description}
+          </Typography>
+          <Button
+            sx={{
+              width: 120,
+              height: 31,
+              float: "right",
+              left: 10,
+              marginTop: -1,
+            }}
+            variant="contained"
+          >
+            Continue...
+          </Button>
+        </CardContent>
+      </Box>
+    </Card>
   );
 };
 

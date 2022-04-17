@@ -1,9 +1,10 @@
 import { Box, Grid, Skeleton, Typography } from "@mui/material";
 import { db } from "config/firebase.config";
-import { collection, doc, query, where } from "firebase/firestore";
+import { collection, doc, query, updateDoc, where } from "firebase/firestore";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import {
   useCollectionData,
   useDocumentData,
@@ -11,6 +12,7 @@ import {
 import { MyQuotePostCard } from "src/client/components/QuotePostCard.component";
 import { MyRegularPostCard } from "src/client/components/RegularPostCard.component";
 import { SideBar } from "src/client/layouts/SideBar.layout";
+import { useUserStore } from "src/client/store/user.store";
 import { collectionConverter } from "src/services/collection.service";
 import {
   quotePostConverter,
@@ -50,9 +52,20 @@ const CollectionPage: NextPage = () => {
 };
 
 const CollectionInfo: React.FC<{ id: string }> = ({ id }) => {
+  const [userUid] = useUserStore((state) => [state.uid]);
+
   const [collectionData, collectionLoading] = useDocumentData(
     doc(db, "collection", id).withConverter(collectionConverter)
   );
+
+  useEffect(() => {
+    if (userUid) {
+      updateDoc(doc(db, "users", userUid), { lastReadCollectionId: id }).catch(
+        (err) => console.log(err)
+      );
+    }
+  }, [userUid]);
+
   return (
     <Box sx={{ display: "flex", alignItems: "flex-end", gap: 5 }}>
       {collectionLoading && (

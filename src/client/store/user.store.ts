@@ -8,6 +8,7 @@ interface User extends UserDoc {
   habits: string[];
   hasCompletedOnBoarding: boolean;
   topics: string[];
+  lastReadCollectionId: string;
 }
 
 interface UserStore extends User {
@@ -20,10 +21,18 @@ export const useUserStore = create<UserStore>((set) => ({
   username: "",
   email: "",
   uid: "",
+  lastReadCollectionId: "",
   setUser: (newUser: Partial<User>) =>
     set((state) => {
-      const { username, email, uid, habits, hasCompletedOnBoarding, topics } =
-        state;
+      const {
+        username,
+        email,
+        uid,
+        habits,
+        hasCompletedOnBoarding,
+        topics,
+        lastReadCollectionId,
+      } = state;
 
       return Object.assign(
         {
@@ -33,6 +42,7 @@ export const useUserStore = create<UserStore>((set) => ({
           habits,
           hasCompletedOnBoarding,
           topics,
+          lastReadCollectionId,
         },
         newUser
       );

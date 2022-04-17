@@ -11,6 +11,7 @@ export const lightThemeOptions = responsiveFontSizes(
       },
       secondary: {
         main: "#F79322",
+        "500": "#FDD47A",
       },
       background: {
         default: "#FDF7E7",

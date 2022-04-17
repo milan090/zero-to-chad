@@ -60,6 +60,7 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
               habits: userData.habits || [],
               hasCompletedOnBoarding: userData?.hasCompletedOnBoarding || false,
               topics: userData.topics || [],
+              lastReadCollectionId: userData.lastReadCollectionId || "",
             });
           }
           setLoading(false);
