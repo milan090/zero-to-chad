@@ -49,6 +49,7 @@ const Home: NextPage = () => {
             <Link href="/login" passHref>
               <Button
                 variant="contained"
+                sx={{ color: "black", backgroundColor: "#F9B450" }}
                 startIcon={<ProfileIcon width="22px" />}
               >
                 Login
