@@ -9,6 +9,7 @@ import {
   useCollectionData,
   useDocumentData,
 } from "react-firebase-hooks/firestore";
+import { CollectionLikeButton } from "src/client/components/LikeButton.component";
 import { MyQuotePostCard } from "src/client/components/QuotePostCard.component";
 import { MyRegularPostCard } from "src/client/components/RegularPostCard.component";
 import { SideBar } from "src/client/layouts/SideBar.layout";
@@ -23,7 +24,6 @@ const CollectionPage: NextPage = () => {
   const router = useRouter();
 
   const id = router.query.id as string;
-  console.log("Id", id);
 
   if (!router.isReady)
     return (
@@ -99,6 +99,9 @@ const CollectionInfo: React.FC<{ id: string }> = ({ id }) => {
         </Box>
       )}
       <Box sx={{ width: "100%" }}>
+        <Box sx={{ display: "flex", gap: 1, marginBottom: 2 }}>
+          <CollectionLikeButton id={id} /> {collectionData?.likes || 0}
+        </Box>
         <Typography variant="h4" fontWeight="600" textTransform="capitalize">
           {collectionLoading ? (
             <Skeleton variant="text" width="80%" />

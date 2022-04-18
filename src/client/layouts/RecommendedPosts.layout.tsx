@@ -8,7 +8,7 @@ import { Post } from "src/types/post.types";
 import { MyRegularPostCard } from "../components/RegularPostCard.component";
 import { MyQuotePostCard } from "../components/QuotePostCard.component";
 import { AccountCircle } from "@mui/icons-material";
-import { HeartIcon } from "src/icons";
+import { PostLikeButton } from "../components/LikeButton.component";
 
 export const RecommendedPosts: React.FC = () => {
   const [topics, userLoading] = useUserStore((state) => [
@@ -83,11 +83,17 @@ const PostCard: React.FC<Post> = (post) => {
           <Typography color="grey.700">@{post.authorUsername}</Typography>
         </Box>
         <Box display="flex" gap={3}>
-          <Box display="flex" alignItems="center" gap={1}>
-            <HeartIcon sx={{ color: "red", width: 45, height: 45 }} />
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            gap={1}
+            sx={{ marginLeft: "0.25rem", marginTop: "1rem" }}
+          >
+            {/* <HeartIcon sx={{ color: "red", width: 45, height: 45 }} /> */}
+            <PostLikeButton id={post.id} />
             <Typography color="grey.700">{post.likes}</Typography>
           </Box>
-          <Box></Box>
         </Box>
       </Box>
     </Box>
