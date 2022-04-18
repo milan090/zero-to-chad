@@ -22,6 +22,7 @@ import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "config/firebase.config";
 import StarsIcon from "@mui/icons-material/Stars";
+import BarChartIcon from "@mui/icons-material/BarChart";
 
 const drawerWidth = 240;
 
@@ -53,6 +54,15 @@ const links: [string, React.ReactNode, RegExp, string][] = [
     />,
     /^\/dashboard\/achievements.*/,
     "/dashboard/achievements",
+  ],
+  [
+    "Web Usage",
+    <BarChartIcon
+      key="website-usage-tracker"
+      sx={{ width: 32, height: 32, color: "#F79322" }}
+    />,
+    /^\dashboard\/website-usage-tracker.*/,
+    "/dashboard/website-usage-tracker",
   ],
 ];
 
