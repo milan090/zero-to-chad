@@ -56,7 +56,10 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
               uid: user.uid,
               habits: userData.habits || [],
               hasCompletedOnBoarding: userData?.hasCompletedOnBoarding || false,
-              topics: userData.topics || [],
+              topics:
+                userData.topics?.length !== 0
+                  ? userData.topics
+                  : ["philosophy", "finance", "self-improvement", "technology"],
               lastReadCollectionId: userData.lastReadCollectionId || "",
             });
           }

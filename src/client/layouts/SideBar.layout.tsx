@@ -21,6 +21,7 @@ import { DashboardProfileDropdown } from "../components/DashboardProfileDropdown
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "config/firebase.config";
+import StarsIcon from "@mui/icons-material/Stars";
 
 const drawerWidth = 240;
 
@@ -43,6 +44,15 @@ const links: [string, React.ReactNode, RegExp, string][] = [
     <MyPostsIcon key="myposts" />,
     /^\/dashboard\/my-posts.*/,
     "/dashboard/my-posts",
+  ],
+  [
+    "Achievements",
+    <StarsIcon
+      key="achievements"
+      sx={{ width: 32, height: 32, color: "#F79322" }}
+    />,
+    /^\/dashboard\/achievements.*/,
+    "/dashboard/achievements",
   ],
 ];
 

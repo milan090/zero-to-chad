@@ -22,10 +22,11 @@ export const LastReadCollection: React.FC = () => {
     state.loading,
   ]);
   const [collectionData, setCollectionData] = useState<CollectionData>();
-  const [collectionLoading, setCollectionLoading] = useState(true);
+  const [collectionLoading, setCollectionLoading] = useState(false);
 
   useEffect(() => {
     if (lastReadCollectionId) {
+      setCollectionLoading(true);
       getDoc(
         doc(db, "collection", lastReadCollectionId).withConverter(
           collectionConverter
@@ -43,6 +44,9 @@ export const LastReadCollection: React.FC = () => {
 
   if (loading || collectionLoading) {
     return <Skeleton variant="rectangular" width="70%" height={80} />;
+  }
+  if (!collectionData) {
+    return <></>;
   }
   return (
     <>

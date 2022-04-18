@@ -16,9 +16,9 @@ import {
 } from "firebase/firestore";
 import { useEffect } from "react";
 import { FirebaseError } from "firebase/app";
-import { useAuthState } from "react-firebase-hooks/auth";
 import Router from "next/router";
 import Link from "next/link";
+import { useUserStore } from "src/client/store/user.store";
 
 type Inputs = {
   username: string;
@@ -77,7 +77,10 @@ const SignupPage: NextPage = () => {
   const password = useRef({});
   password.current = watch("password", "");
 
-  const [user] = useAuthState(auth);
+  const [userUid, hasCompletedOnBoarding] = useUserStore((state) => [
+    state.userUid,
+    state.hasCompletedOnBoarding,
+  ]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
@@ -94,8 +97,14 @@ const SignupPage: NextPage = () => {
   };
 
   useEffect(() => {
-    if (user) Router.push("/dashboard");
-  }, [user]);
+    if (userUid) {
+      if (hasCompletedOnBoarding) {
+        Router.push("/choosetopics");
+      } else {
+        Router.push("/dashboard");
+      }
+    }
+  }, [userUid]);
 
   return (
     <Grid
@@ -152,7 +161,10 @@ const SignupPage: NextPage = () => {
                 message: "Password should be atleast 6 characters long",
                 value: 6,
               },
-              maxLength: 24,
+              maxLength: {
+                value: 24,
+                message: "Password should not be longer than 24 characters",
+              },
             })}
             error={!!errors.password}
             helperText={errors.password?.message}
