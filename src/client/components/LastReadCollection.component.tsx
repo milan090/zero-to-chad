@@ -62,7 +62,7 @@ export const LastReadCollection: React.FC = () => {
           {collectionData?.imageUrl ? (
             <Box
               sx={{
-                // height: "120px",
+                height: 146,
                 width: "100%",
                 maxWidth: 120,
                 position: "relative",
