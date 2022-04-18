@@ -9,6 +9,7 @@ import {
 import { db } from "config/firebase.config";
 import { doc, getDoc } from "firebase/firestore";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Rectangle3 } from "src/icons";
 import { collectionConverter } from "src/services/collection.service";
@@ -86,18 +87,23 @@ export const LastReadCollection: React.FC = () => {
             <Typography paragraph sx={{ width: 477 }}>
               {collectionData?.description}
             </Typography>
-            <Button
-              sx={{
-                width: 120,
-                height: 31,
-                float: "right",
-                left: 10,
-                marginTop: -1,
-              }}
-              variant="contained"
+            <Link
+              passHref
+              href={`/dashboard/explore/collection/${lastReadCollectionId}`}
             >
-              Continue...
-            </Button>
+              <Button
+                sx={{
+                  width: 120,
+                  height: 31,
+                  float: "right",
+                  left: 10,
+                  marginTop: -1,
+                }}
+                variant="contained"
+              >
+                Continue...
+              </Button>
+            </Link>
           </CardContent>
         </Box>
       </Card>

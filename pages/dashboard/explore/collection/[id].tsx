@@ -64,7 +64,16 @@ const CollectionInfo: React.FC<{ id: string }> = ({ id }) => {
         (err) => console.log(err)
       );
     }
-  }, [userUid]);
+  }, [userUid, id]);
+
+  useEffect(() => {
+    if (collectionData) {
+      console.log("View++");
+      updateDoc(doc(db, "collection", id), {
+        views: collectionData.views + 1,
+      }).catch(console.log);
+    }
+  }, [collectionLoading, id]);
 
   return (
     <Box sx={{ display: "flex", alignItems: "flex-end", gap: 5 }}>
