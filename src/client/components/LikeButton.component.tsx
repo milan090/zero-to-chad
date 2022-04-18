@@ -37,7 +37,7 @@ export const PostLikeButton: React.FC<Props> = ({ id }) => {
   if (likeLoading || loading) {
     return (
       <Box>
-        <FavoriteBorderOutlinedIcon />;
+        <FavoriteBorderOutlinedIcon />
       </Box>
     );
   }

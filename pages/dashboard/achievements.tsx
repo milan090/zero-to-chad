@@ -58,10 +58,12 @@ const AchievementsList: React.FC<{ userUid: string }> = ({ userUid }) => {
     );
   }
 
+  const habitData = habitsData ? habitsData[0] : null;
+
   return (
     <Box>
       <AchievementCard
-        currentValue={habitsData ? habitsData[0].streak : 0}
+        currentValue={habitData?.streak || 0}
         goal={60}
         name="Habit Master"
         description="Complete 60 day streak of your habit"
