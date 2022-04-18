@@ -1,23 +1,18 @@
-import {
-  alpha,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Skeleton,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Skeleton, Typography } from "@mui/material";
 import { db } from "config/firebase.config";
-import { doc } from "firebase/firestore";
+import { collection, limit, query, where } from "firebase/firestore";
 import { NextPage } from "next";
+
 import Link from "next/link";
-import { useDocumentDataOnce } from "react-firebase-hooks/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { ClosableBox } from "src/client/components/ClosableBox.component";
 import { HabitsGrid } from "src/client/components/HabitsGrid.component";
 import { SideBar } from "src/client/layouts/SideBar.layout";
 import { useUserStore } from "src/client/store/user.store";
-import { Rectangle3, Ellipse2 } from "src/icons";
-import { collectionConverter } from "src/services/collection.service";
+
+import { MyQuotePostCard } from "src/client/components/QuotePostCard.component";
+import { LastReadCollection } from "src/client/components/LastReadCollection.component";
+import { quotePostConverter } from "src/services/post.service";
 
 const DashboardPage: NextPage = () => {
   const [username, hasCompletedOnBoarding, lastReadCollectionId, loading] =
@@ -46,7 +41,7 @@ const DashboardPage: NextPage = () => {
         sx={{
           margin: "auto",
           maxWidth: 1300,
-          paddinigX: "2rem",
+          paddingX: "2rem",
           boxSizing: "content-box",
         }}
       >
@@ -78,14 +73,8 @@ const DashboardPage: NextPage = () => {
             </Box>
           </ClosableBox>
         )}
-        {lastReadCollectionId ? (
-          <>
-            <Typography variant="h4" fontWeight="600" sx={{ paddingTop: 3 }}>
-              You were reading
-            </Typography>
-            <LastReadCollection id={lastReadCollectionId} />
-          </>
-        ) : (
+        <LastReadCollection />
+        {!lastReadCollectionId && !loading && (
           <Box>
             <Typography
               variant="h5"
@@ -144,48 +133,12 @@ const DashboardPage: NextPage = () => {
             </Box>
           </Box>
 
-          <Box>
+          <Box sx={{ maxWidth: 500, width: "100%" }}>
             <Typography variant="h4" fontWeight="600">
               Quote of the Day
             </Typography>
 
-            <Card
-              style={{ backgroundColor: alpha("#FDD47A", 0.65) }}
-              sx={{
-                width: 477,
-                height: 183,
-                borderRadius: 4,
-                marginTop: "1rem",
-              }}
-            >
-              <CardContent>
-                <Ellipse2 />
-                <Box
-                  sx={{
-                    textAlign: "center",
-                    float: "right",
-                    width: 303,
-                    marginTop: 3,
-                    marginRight: 2,
-                  }}
-                >
-                  <Typography
-                    fontStyle="italic"
-                    fontSize="1.1rem"
-                    fontWeight="400"
-                  >
-                    “For every action there is an unequal and greater reaction”
-                  </Typography>
-                  <Typography
-                    fontWeight="500"
-                    fontSize="1.1rem"
-                    sx={{ marginTop: 1 }}
-                  >
-                    Albert Einstein
-                  </Typography>
-                </Box>
-              </CardContent>
-            </Card>
+            <QuoteOfTheDay />
           </Box>
         </Box>
       </Box>
@@ -193,48 +146,36 @@ const DashboardPage: NextPage = () => {
   );
 };
 
-const LastReadCollection: React.FC<{ id: string }> = ({ id }) => {
-  const [collectionData, collectionLoading] = useDocumentDataOnce(
-    doc(db, "collection", id).withConverter(collectionConverter)
+const QuoteOfTheDay: React.FC = () => {
+  const [quotes, quoteLoading] = useCollectionData(
+    query(
+      collection(db, "posts").withConverter(quotePostConverter),
+      where("type", "==", "quote"),
+      where("tags", "array-contains-any", ["self-improvement", "philosophy"]),
+      limit(1)
+    )
   );
 
-  if (collectionLoading) {
-    return <Skeleton variant="rectangular" width="70%" height={80} />;
+  if (quoteLoading) {
+    return (
+      <Skeleton
+        variant="rectangular"
+        width={300}
+        height={200}
+        sx={{ marginTop: "1rem" }}
+      />
+    );
   }
+
+  if (!quotes?.length) {
+    return <></>;
+  }
+  const quote = quotes[0];
+
   return (
-    <Card
-      sx={{
-        position: "relative",
-        width: 671,
-        height: 146,
-        marginTop: 3,
-        borderRadius: 4,
-      }}
-    >
-      <Box sx={{ display: "flex" }}>
-        <Rectangle3 />
-        <CardContent sx={{ right: 100, bottom: 50 }}>
-          <Typography variant="h6" fontWeight="600">
-            {collectionData?.name}
-          </Typography>
-          <Typography paragraph sx={{ width: 477 }}>
-            {collectionData?.description}
-          </Typography>
-          <Button
-            sx={{
-              width: 120,
-              height: 31,
-              float: "right",
-              left: 10,
-              marginTop: -1,
-            }}
-            variant="contained"
-          >
-            Continue...
-          </Button>
-        </CardContent>
-      </Box>
-    </Card>
+    <Box sx={{ marginTop: "1rem" }}>
+      <MyQuotePostCard {...quote} />
+    </Box>
   );
 };
 

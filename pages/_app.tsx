@@ -38,7 +38,6 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   const [user, authLoading] = useAuthState(auth);
 
   useEffect(() => {
-    console.log("auth loading:", authLoading);
     if (!authLoading) {
       console.log(user);
       if (user) {

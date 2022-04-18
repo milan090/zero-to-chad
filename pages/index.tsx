@@ -77,17 +77,19 @@ const Home: NextPage = () => {
           <Typography textAlign="center">
             Your personal all-in-one self improvement app
           </Typography>
-          <Button
-            variant="contained"
-            sx={{
-              fontSize: "1.2rem",
-              marginTop: "1rem",
-              borderRadius: "5rem",
-              padding: "0.5rem 2rem",
-            }}
-          >
-            Take Action Now!
-          </Button>
+          <Link passHref href={user ? "/dashboard" : "/signup"}>
+            <Button
+              variant="contained"
+              sx={{
+                fontSize: "1.2rem",
+                marginTop: "1rem",
+                borderRadius: "5rem",
+                padding: "0.5rem 2rem",
+              }}
+            >
+              Take Action Now!
+            </Button>
+          </Link>
         </Box>
       </Box>
     </div>
