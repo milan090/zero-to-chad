@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![ZeroToChad Preview](public/images/preview.png)
 
-## Getting Started
+# 💡 Introduction
 
-**Note**: Install [pnpm package manager](https://pnpm.io/installation).
+This is Zero To Chad. Your all-in-one self improvement app. Become the best version of yourself!
 
-Install all dependencies
+## ✨Features 
 
-```bash
-pnpm i
-```
+- Learn and share ideas in short post format 💡
+- Manage and track your habits
+- Shows you your achievements in self improvement
+- Monitor your time usage on different websites
 
-First, run the development server:
+## Team Coffee ☕
 
-```bash
-pnpm run dev
-```
+- [Milan](https://github.com/milan090) 🤠
+- [Aineas](https://github.com/AineasGamingYolo) 😉
 
-## Setup Husky
+##### Crafted With ♥ By Team Coffee
 
-```bash
-pnpm husky install
-```
-
-## Setting up Env variables
-
-Create `.env.local` file in the root and copy below code into it. Then replace the values for your corresponding firebase account
-
-```
-NEXT_PUBLIC_FIREBASE_API_KEY=XXX
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=XXX
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=XXX
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=XXX
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=XXX
-NEXT_PUBLIC_FIREBASE_APP_ID=XXX
-```
+![love-badge](https://forthebadge.com/images/badges/built-with-love.svg)
