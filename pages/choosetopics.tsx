@@ -9,6 +9,7 @@ import { useUserStore } from "src/client/store/user.store";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { TopicsSelector } from "src/client/components/TopicsSelector.component";
+import toast from "react-hot-toast";
 
 const ChooseTopicsPage: NextPage = () => {
   const router = useRouter();
@@ -20,6 +21,12 @@ const ChooseTopicsPage: NextPage = () => {
   ]);
 
   const handleNextClick = () => {
+    if (selectedTopics.length < 3) {
+      return toast.error("Pick atleast 3 topics");
+    } else if (selectedTopics.length > 6) {
+      return toast.error("Pick no more than 6 topics");
+    }
+
     const userDocRef = doc(db, "users", userUid);
     setSaving(true);
     updateDoc(userDocRef, {

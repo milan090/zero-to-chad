@@ -19,6 +19,7 @@ import { habitInfoConverter } from "src/services/habits.service";
 import { useUserStore } from "src/client/store/user.store";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 //BIG TODO: remove hardcoded values and make it dynamic
 
@@ -36,7 +37,14 @@ const ChooseHabitsPage: NextPage = () => {
 
   const setCardSelected = (habitId: string, value: boolean) => {
     if (value) {
-      setSelectedHabits([...selectedHabits, habitId]);
+      const newHabits = [...selectedHabits, habitId];
+      setSelectedHabits(newHabits);
+
+      if (newHabits.length > 3) {
+        toast("Training more than 3 habits at a time would be ineffective", {
+          icon: "⚠️",
+        });
+      }
     } else {
       setSelectedHabits(
         selectedHabits.filter((selectedHabitId) => selectedHabitId !== habitId)
@@ -45,6 +53,9 @@ const ChooseHabitsPage: NextPage = () => {
   };
 
   const handleNextClick = () => {
+    if (selectedHabits.length < 2) {
+      return toast.error("Pick atleast 2 habits");
+    }
     const userDocRef = doc(db, "users", userUid);
     setSaving(true);
     updateDoc(userDocRef, {

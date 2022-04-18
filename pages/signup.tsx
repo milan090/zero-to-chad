@@ -1,9 +1,9 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { PrimaryBox } from "src/client/components/Box.component";
 import { TextInput } from "src/client/components/TextInput.component";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { createUserWithEmailAndPassword, User } from "firebase/auth";
 import { auth, db } from "config/firebase.config";
 import {
@@ -76,14 +76,15 @@ const SignupPage: NextPage = () => {
 
   const password = useRef({});
   password.current = watch("password", "");
-
+  const [loading, setLoading] = useState(false);
   const [userUid, hasCompletedOnBoarding] = useUserStore((state) => [
-    state.userUid,
+    state.uid,
     state.hasCompletedOnBoarding,
   ]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
+      setLoading(true);
       await signUp(data);
     } catch (err) {
       const error = err as { type: string; message: string };
@@ -94,11 +95,13 @@ const SignupPage: NextPage = () => {
         setError("username", { message: error.message });
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
+    console.log(userUid);
     if (userUid) {
-      if (hasCompletedOnBoarding) {
+      if (!hasCompletedOnBoarding) {
         Router.push("/choosetopics");
       } else {
         Router.push("/dashboard");
@@ -190,7 +193,7 @@ const SignupPage: NextPage = () => {
             type="submit"
           >
             <Typography variant="h5" color="white" fontWeight="500">
-              Sign Up
+              {loading ? <CircularProgress /> : "Sign Up"}
             </Typography>
           </Button>
           <Typography>

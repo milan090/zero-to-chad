@@ -22,6 +22,7 @@ export const ClosableBox: React.FC<Props> = ({ children }) => {
         maxWidth: "40rem",
         overflow: "unset",
         position: "relative",
+        marginBottom: "2rem",
       }}
     >
       {children}

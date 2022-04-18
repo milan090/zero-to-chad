@@ -75,7 +75,7 @@ const DashboardPage: NextPage = () => {
         )}
         <LastReadCollection />
         {!lastReadCollectionId && !loading && (
-          <Box>
+          <Box sx={{ paddingBottom: "5rem" }}>
             <Typography
               variant="h5"
               fontWeight="600"
