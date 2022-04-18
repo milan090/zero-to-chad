@@ -15,6 +15,7 @@ specifiers:
   '@types/react-dom': 18.0.0
   '@typescript-eslint/eslint-plugin': ^5.18.0
   '@typescript-eslint/parser': ^5.18.0
+  chart.js: ^3.7.1
   csstype: ^3.0.11
   eslint: ^8.13.0
   eslint-config-next: 12.1.4
@@ -25,6 +26,7 @@ specifiers:
   next-seo: ^5.4.0
   prettier: ^2.6.2
   react: 18.0.0
+  react-chartjs-2: ^4.1.0
   react-dom: 18.0.0
   react-firebase-hooks: ^5.0.3
   react-hook-form: ^7.29.0
@@ -41,10 +43,12 @@ dependencies:
   '@fontsource/roboto': 4.5.5
   '@mui/icons-material': 5.6.0_2553ee89b70ee3f11770355e548c8981
   '@mui/material': 5.6.0_a40551c8620010c48b5371ddd0c74eca
+  chart.js: 3.7.1
   firebase: 9.6.10
   next: 12.1.4_cba0cb7a45c5be1acc73e969c348db7f
   next-seo: 5.4.0_c0abbb53577d424fe320649841fdc7d4
   react: 18.0.0
+  react-chartjs-2: 4.1.0_chart.js@3.7.1+react@18.0.0
   react-dom: 18.0.0_react@18.0.0
   react-firebase-hooks: 5.0.3_firebase@9.6.10+react@18.0.0
   react-hook-form: 7.29.0_react@18.0.0
@@ -2943,6 +2947,10 @@ packages:
       supports-color: 7.2.0
     dev: true
 
+  /chart.js/3.7.1:
+    resolution: {integrity: sha512-8knRegQLFnPQAheZV8MjxIXc5gQEfDFD897BJgv/klO/vtIyFFmgMXrNfgrXpbTr/XbTturxRgxIXx/Y+ASJBA==}
+    dev: false
+
   /cliui/7.0.4:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
     dependencies:
@@ -4401,6 +4409,16 @@ packages:
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
+
+  /react-chartjs-2/4.1.0_chart.js@3.7.1+react@18.0.0:
+    resolution: {integrity: sha512-AsUihxEp8Jm1oBhbEovE+w50m9PVNhz1sfwEIT4hZduRC0m14gHWHd0cUaxkFDb8HNkdMIGzsNlmVqKiOpU74g==}
+    peerDependencies:
+      chart.js: ^3.5.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      chart.js: 3.7.1
+      react: 18.0.0
+    dev: false
 
   /react-dom/18.0.0_react@18.0.0:
     resolution: {integrity: sha512-XqX7uzmFo0pUceWFCt7Gff6IyIMzFUn7QMZrbrQfGxtaxXZIcGQzoNpRLE3fQLnS4XzLLPMZX2T9TRcSrasicw==}
