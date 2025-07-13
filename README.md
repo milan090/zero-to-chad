@@ -16,7 +16,7 @@ This is Zero To Chad. Your all-in-one self improvement app. Become the best vers
 ## Team Coffee ☕
 
 - [Milan](https://github.com/milan090) 🤠
-- [Aineas](https://github.com/AineasGamingYolo) 😉
+- [Aineias](https://github.com/devaineias) 😉
 
 ##### Crafted With ♥ By Team Coffee
 
